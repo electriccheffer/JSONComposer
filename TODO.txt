@@ -1,0 +1,3 @@
+- Create Makefile 
+- Build a window 
+- Make Sub Windows 
