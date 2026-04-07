@@ -62,14 +62,8 @@ int main(int argv, char** argc){
 		ImGui::End();
 
 		// Left panel - bottom half
-		ImGui::SetNextWindowPos(ImVec2(position.x + size.x * 0.5f,
-						 position.y + size.y * 0.5f));
-		ImGui::SetNextWindowSize(ImVec2(size.x , size.y));
-		ImGui::Begin("Right-Bottom", nullptr, 
-				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		ImGui::Text("Right Bottom Panel");
-		ImGui::End();	
-		
+		InputWindow inputWindow(size,position);
+		inputWindow.Render(); 
 		ImGui::Render(); 	
 		glClear(GL_COLOR_BUFFER_BIT);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
