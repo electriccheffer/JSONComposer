@@ -3,6 +3,7 @@
 #include "../third_party/imgui/imgui.h"
 #include "../third_party/imgui/backends/imgui_impl_opengl3.h"
 #include "../third_party/imgui/backends/imgui_impl_glfw.h"
+#include "../include/Windows.hpp"
 
 int main(int argv, char** argc){
 	
@@ -43,12 +44,13 @@ int main(int argv, char** argc){
 		ImGuiViewport* viewport = ImGui::GetMainViewport(); 
 		ImVec2 size = viewport->Size; 
 		ImVec2 position = viewport->Pos; 
-	
+		
+		// Left Panel	
 		ImGui::SetNextWindowPos(position);
 		ImGui::SetNextWindowSize(ImVec2(size.x * 0.5f, size.y ));
-		ImGui::Begin("Left-Top", nullptr, 
+		ImGui::Begin("Left", nullptr, 
 				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		ImGui::Text("Left Top Panel");
+		ImGui::Text("Left Panel");
 		ImGui::End();
 
 		// Right panel - top half
@@ -63,9 +65,9 @@ int main(int argv, char** argc){
 		ImGui::SetNextWindowPos(ImVec2(position.x + size.x * 0.5f,
 						 position.y + size.y * 0.5f));
 		ImGui::SetNextWindowSize(ImVec2(size.x , size.y));
-		ImGui::Begin("Left-Bottom", nullptr, 
+		ImGui::Begin("Right-Bottom", nullptr, 
 				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		ImGui::Text("Left Bottom Panel");
+		ImGui::Text("Right Bottom Panel");
 		ImGui::End();	
 		
 		ImGui::Render(); 	

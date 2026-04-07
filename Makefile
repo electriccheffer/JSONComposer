@@ -1,6 +1,9 @@
 buildDirectory = ./build
+
 sourceDirectory = ./src
+
 thirdPartyDirectory = ./third_party/imgui
+
 buildFiles = $(sourceDirectory)/main.cpp \
 	     third_party/imgui/imgui.cpp \
 	     third_party/imgui/imgui_draw.cpp \
@@ -8,8 +11,10 @@ buildFiles = $(sourceDirectory)/main.cpp \
 	     third_party/imgui/imgui_widgets.cpp \
 	     third_party/imgui/backends/imgui_impl_glfw.cpp \
 	     third_party/imgui/backends/imgui_impl_opengl3.cpp \
+	     lib/Windows.cpp
 
 executable = $(buildDirectory)/main
+
 compileOptions =-std=c++17 -I/opt/homebrew/opt/glfw/include \
 		-Ithird_party/imgui \
 		-Ithird_party/imgui/backends \
