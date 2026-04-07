@@ -54,16 +54,13 @@ int main(int argv, char** argc){
 		ImGui::End();
 
 		// Right panel - top half
-		ImGui::SetNextWindowPos(ImVec2(size.x * 0.5f + position.x, position.y));
-		ImGui::SetNextWindowSize(ImVec2(size.x * 0.7f, size.y * 0.5f));
-		ImGui::Begin("Right-Top", nullptr, 
-				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		ImGui::Text("Right Top Panel");
-		ImGui::End();
-
+		FileBrowserWindow browserWindow(size,position);
+		browserWindow.Render(); 	
+				
 		// Left panel - bottom half
 		InputWindow inputWindow(size,position);
 		inputWindow.Render(); 
+
 		ImGui::Render(); 	
 		glClear(GL_COLOR_BUFFER_BIT);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

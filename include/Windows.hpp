@@ -2,11 +2,24 @@
 #define WINDOWS_HPP
 #include "../third_party/imgui/imgui.h"
 
+class FileBrowserWindow{
+	
+	protected: 
+		ImVec2& size; 
+		ImVec2& position; 	
+	
+	public: 
+		FileBrowserWindow(ImVec2& size,ImVec2& position):
+						size(size),position(position){}
+
+		void Render(); 
+}; 
+
 class InputWindow{
 	
 	protected:
-		ImVec2 size; 
-		ImVec2 position; 	
+		ImVec2& size; 
+		ImVec2& position; 	
 
 	public:
 		InputWindow(ImVec2& size,ImVec2& position):
