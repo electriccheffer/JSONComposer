@@ -135,3 +135,11 @@ TEST(DirectoryData,SubdirectoriesWithFiles){
 	}
 	EXPECT_EQ(size,count);
 }
+
+TEST(DirectoryData,InvalidPath){
+	
+	std::filesystem::path testPath = std::filesystem::path("notReal"); 
+	DirectoryData directoryData(testPath);
+	EXPECT_THROW(directoryData.GetDirectoryData(),std::filesystem::filesystem_error);
+}
+
