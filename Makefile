@@ -51,7 +51,7 @@ clean:
 	rm -f $(executable)
 
 $(testTarget):$(testObjectFiles)
-	g++ $(CXXFlags)  $(testDirectory)/IOTest.cpp $(testObjectFiles) \
+	g++ $(CXXFlags) $(testDirectory)/IOTest.cpp $(testObjectFiles) \
 	-o $(buildDirectory)/test_runner $(testCompileOptions)	
 
 $(testObjectFiles): $(testFiles)

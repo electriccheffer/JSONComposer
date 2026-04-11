@@ -1,3 +1,18 @@
-- Create Makefile 
-- Build a window 
-- Make Sub Windows 
+- Directory window 
+	- Traverse a directory 
+	- Make a new file 
+	- Open a file
+	- Delete a file 
+	- Make a directory
+	- Display above features in window
+- Object Editor 
+	- Add Object fields
+	- Remove Object fields
+	- Save Object
+- File Viewer window 
+	- View Objects for a file 
+	- Remove Object from file 
+	- Edit Object 
+- Object Editor
+	- Add Object to Existing Object
+	- Remove Object from Existing Object

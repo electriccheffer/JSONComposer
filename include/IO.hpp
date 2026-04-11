@@ -10,7 +10,7 @@ class DirectoryData{
 		std::vector<std::filesystem::directory_entry>& GetDirectoryData(); 	
 	protected: 
 		std::vector<std::filesystem::directory_entry> directoryData; 		
-		
+		std::filesystem::path& rootPath; 		
 
 }; 
 
