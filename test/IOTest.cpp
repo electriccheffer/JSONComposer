@@ -89,6 +89,49 @@ TEST(DirectoryData,Subdirectories){
 		}
 	}
 	EXPECT_EQ(size,count); 
+}
+
+TEST(DirectoryData,SubdirectoriesWithFiles){
+	std::filesystem::path testPath = std::filesystem::path("test")
+				 / "testData" / "directoryTestData" / "subDirectoriesWithFiles" ; 
+	DirectoryData directoryData(testPath);
+	std::vector<std::filesystem::directory_entry> result = directoryData.GetDirectoryData(); 
+	std::vector<std::filesystem::path> expectedPaths;
+	std::filesystem::path firstPath = std::filesystem::path("test") / 
+					"testData" / "directoryTestData" / 
+					"subDirectoriesWithFiles" / "dirOne" ;
+	std::filesystem::path secondPath = std::filesystem::path("test") 
+					/ "testData" / "directoryTestData" / 
+					"subDirectoriesWithFiles" / "dirTwo" ;
+	std::filesystem::path thirdPath = std::filesystem::path("test") 
+					/ "testData" / "directoryTestData" / 
+					"subDirectoriesWithFiles" /"fileThree.txt";
+	std::filesystem::path fourthPath = std::filesystem::path("test") / 
+					"testData" / "directoryTestData" / 
+					"subDirectoriesWithFiles" / "dirOne" / "fileOne.txt" ;
+	std::filesystem::path fifthPath = std::filesystem::path("test") 
+					/ "testData" / "directoryTestData" / 
+					"subDirectoriesWithFiles" / "dirTwo" / "fileTwo.txt" ;
 
 
+	expectedPaths.push_back(firstPath);
+	expectedPaths.push_back(secondPath);
+	expectedPaths.push_back(thirdPath); 
+	expectedPaths.push_back(fourthPath); 
+	expectedPaths.push_back(fifthPath); 
+	
+	int count = 0; 
+	int size = result.size(); 
+	int expectedSize = expectedPaths.size(); 
+
+	for(int i = 0 ; i < size ; i++){
+		for(int k = 0 ; k < expectedSize  ; k++){
+			
+			if(result[i].path().string() == expectedPaths[k].string()){
+				count++; 
+			}	
+
+		}
+	}
+	EXPECT_EQ(size,count);
 }
