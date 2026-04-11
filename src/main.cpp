@@ -40,18 +40,14 @@ int main(int argv, char** argc){
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame(); 
 		ImGui::NewFrame();
-		
+			
 		ImGuiViewport* viewport = ImGui::GetMainViewport(); 
 		ImVec2 size = viewport->Size; 
 		ImVec2 position = viewport->Pos; 
 		
 		// Left Panel	
-		ImGui::SetNextWindowPos(position);
-		ImGui::SetNextWindowSize(ImVec2(size.x * 0.5f, size.y ));
-		ImGui::Begin("Left", nullptr, 
-				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		ImGui::Text("Left Panel");
-		ImGui::End();
+		ObjectBrowserWindow objectBrowserWindow(size,position); 
+		objectBrowserWindow.Render(); 	
 
 		// Right panel - top half
 		FileBrowserWindow browserWindow(size,position);

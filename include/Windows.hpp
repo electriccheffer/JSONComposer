@@ -1,6 +1,18 @@
 #ifndef WINDOWS_HPP
 #define WINDOWS_HPP
 #include "../third_party/imgui/imgui.h"
+#include <vector>
+
+class ObjectBrowserWindow{
+	
+	protected:
+		ImVec2& size; 
+		ImVec2& position; 	
+	public: 
+		ObjectBrowserWindow(ImVec2& size,ImVec2& position):
+						size(size),position(position){}
+		void Render(); 
+}; 
 
 class FileBrowserWindow{
 	
@@ -19,7 +31,7 @@ class InputWindow{
 	
 	protected:
 		ImVec2& size; 
-		ImVec2& position; 	
+		ImVec2& position;
 
 	public:
 		InputWindow(ImVec2& size,ImVec2& position):
