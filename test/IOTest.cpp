@@ -4,7 +4,7 @@
 #include "../include/IO.hpp"
 #include <iostream> 
 
-TEST(TrivialTest,AlwaysPasses){
+TEST(IOTrivialTest,AlwaysPasses){
 
 	EXPECT_TRUE(true); 
 }

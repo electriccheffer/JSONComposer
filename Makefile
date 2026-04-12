@@ -20,8 +20,8 @@ buildFiles = $(sourceDirectory)/main.cpp \
 	     third_party/imgui/imgui_widgets.cpp \
 	     third_party/imgui/backends/imgui_impl_glfw.cpp \
 	     third_party/imgui/backends/imgui_impl_opengl3.cpp \
-	     lib/Windows.cpp
-
+	     $(libraryDirectory)/Windows.cpp
+	     
 
 executable = $(buildDirectory)/main
 
@@ -31,11 +31,14 @@ compileOptions =-std=c++17 -I/opt/homebrew/opt/glfw/include \
 		-L/opt/homebrew/opt/glfw/lib -lglfw -framework OpenGL\
 		-framework Cocoa -framework IOKit -framework CoreVideo -o
 
-testFiles = $(libraryDirectory)/IO.cpp  
+testFiles = $(libraryDirectory)/IO.cpp \
+	    $(libraryDirectory)/ViewModels.cpp 
 
-testScripts = $(testDirectory)/IOTest.cpp
+testScripts = $(testDirectory)/IOTest.cpp \
+	      $(testDirectory)/ViewModelTests.cpp
 
-testObjectFiles = $(buildDirectory)/IO.o
+testObjectFiles = $(buildDirectory)/IO.o \
+		  $(buildDirectory)/ViewModels.o
 
 testTarget = $(buildDirectory)/test_runner
 
@@ -51,11 +54,12 @@ clean:
 	rm -f $(executable)
 
 $(testTarget):$(testObjectFiles)
-	g++ $(CXXFlags) $(testDirectory)/IOTest.cpp $(testObjectFiles) \
+	g++ $(CXXFlags) $(testScripts)  $(testObjectFiles) \
 	-o $(buildDirectory)/test_runner $(testCompileOptions)	
 
 $(testObjectFiles): $(testFiles)
 	g++ $(CXXFlags) -c $(libraryDirectory)/IO.cpp -o $(buildDirectory)/IO.o
+	g++ $(CXXFlags) -c $(libraryDirectory)/ViewModels.cpp -o $(buildDirectory)/ViewModels.o
 	
 $(executable): $(buildFiles)
 	g++ $(buildFiles) $(compileOptions) $(executable)

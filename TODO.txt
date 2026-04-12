@@ -1,14 +1,17 @@
 - Directory window 
-	- Traverse a directory 
-	- Make a new file 
-	- Open a file
-	- Delete a file 
-	- Make a directory
+	- Make Directory Window Controller
+		- Make a new file 
+		- Open a file
+		- Delete a file 
+		- Make a directory
 	- Display above features in window
-- Object Editor 
-	- Add Object fields
-	- Remove Object fields
-	- Save Object
+		- UI Test 
+- Object Editor
+	- Create Object for managing raw data types 
+	- Make Object Editor Window	
+		- Add Object fields
+		- Remove Object fields
+		- Save Object
 - File Viewer window 
 	- View Objects for a file 
 	- Remove Object from file 
