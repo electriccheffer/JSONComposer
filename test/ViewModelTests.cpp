@@ -93,3 +93,20 @@ TEST(FileViewModelTest,BadPathError){
 	EXPECT_THROW(fileViewModel.ReadDirectory(testPath),std::filesystem::filesystem_error);
 
 }
+
+TEST(FileViewModelTest,DeleteFile){
+	
+	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
+					     "deleteFileDirectory" / "deleteMe.txt"; 	
+	FileViewModel fileViewModel;
+	std::string objectName = "Spells";  
+	EXPECT_TRUE(fileViewModel.NewFile(deletionPath,objectName));
+	EXPECT_TRUE(fileViewModel.DeleteFile(deletionPath));	
+}
+
+TEST(FileViewModelTest,DeletePathNonExist){
+	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
+					     "deleteFileDirectory" / "deleteMe.txt"; 	
+	FileViewModel fileViewModel; 
+	EXPECT_FALSE(fileViewModel.DeleteFile(deletionPath));	
+}

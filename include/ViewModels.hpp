@@ -8,11 +8,15 @@
 class FileViewModel{
 
 	public:
-		FileViewModel();  
+		FileViewModel();
+  
 		bool NewFile(std::filesystem::path& writeLocation,std::string& objectName);
+
 		std::vector<std::filesystem::directory_entry> 
 						ReadDirectory(std::filesystem::path& readPath); 
-		
+
+		bool DeleteFile(std::filesystem::path& deletionPath); 			
+
 	protected:
 };  
 

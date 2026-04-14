@@ -35,3 +35,11 @@ std::vector<std::filesystem::directory_entry> FileViewModel::ReadDirectory(
 	}
 	return result; 	
 }
+
+bool FileViewModel::DeleteFile(std::filesystem::path& deletionPath){
+
+	bool result = std::filesystem::remove(deletionPath);		
+
+	return result; 	
+
+}
