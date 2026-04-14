@@ -110,3 +110,12 @@ TEST(FileViewModelTest,DeletePathNonExist){
 	FileViewModel fileViewModel; 
 	EXPECT_FALSE(fileViewModel.DeleteFile(deletionPath));	
 }
+
+TEST(FileViewModelTest,DeleteDirectory){
+	
+	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
+					     "deleteFileDirectory" ; 	
+	FileViewModel fileViewModel; 
+	EXPECT_FALSE(fileViewModel.DeleteFile(deletionPath));	
+
+}
