@@ -3,12 +3,16 @@
 #include <filesystem> 
 #include <fstream> 
 #include <string> 
+#include <vector> 
 
 class FileViewModel{
 
 	public:
 		FileViewModel();  
 		bool NewFile(std::filesystem::path& writeLocation,std::string& objectName);
+		std::vector<std::filesystem::directory_entry> 
+						ReadDirectory(std::filesystem::path& readPath); 
+		
 	protected:
 };  
 
