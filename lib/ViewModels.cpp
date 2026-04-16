@@ -21,6 +21,20 @@ bool FileViewModel::NewFile(std::filesystem::path& writeLocation,std::string& ob
 	return true;  		
 }
 
+bool FileViewModel::RenameFile(std::filesystem::path& oldPath,std::string& newFileName){
+
+
+	bool fileExists = std::filesystem::exists(oldPath);	
+	if(!fileExists){
+		return false; 
+	}
+	std::filesystem::path oldPathReference(oldPath);	
+	std::filesystem::path newPath = oldPathReference.replace_filename(newFileName);
+	std::filesystem::rename(oldPath,newPath); 
+	bool result = std::filesystem::exists(newPath);
+	return result; 
+}
+
 std::vector<std::filesystem::directory_entry> FileViewModel::ReadDirectory(
 						std::filesystem::path& readPath){
 

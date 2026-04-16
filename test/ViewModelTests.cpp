@@ -144,3 +144,31 @@ TEST(FileViewModelTest,DeleteNonDirectory){
 	EXPECT_FALSE(result);	
 }
 
+TEST(FileViewModelTest,RenameFile){
+
+	std::filesystem::path renameFilePath = std::filesystem::path("test") / 
+						"testData" / "renameFile" / "changeMe.txt";
+	
+	FileViewModel fileViewModel; 
+	std::string newName = std::string("newName.txt");
+	bool result = fileViewModel.RenameFile(renameFilePath,newName);
+	EXPECT_TRUE(result);
+	std::filesystem::path newPathName = std::filesystem::path("test") / 
+						"testData" / "renameFile" / newName;
+	bool fileExists = std::filesystem::exists(newPathName);
+	EXPECT_TRUE(fileExists);
+	std::ofstream file(renameFilePath);
+	
+	EXPECT_TRUE(file);		
+}
+
+TEST(FileViewModelTest,RenameFilePathNotExist){
+	
+	std::filesystem::path renameFilePath = std::filesystem::path("test") / 
+						"testData" / "renameFile" / "noExist.txt";
+	
+	FileViewModel fileViewModel; 
+	std::string newName = std::string("newName.txt");
+	bool result = fileViewModel.RenameFile(renameFilePath,newName);	
+	EXPECT_FALSE(result);	
+}

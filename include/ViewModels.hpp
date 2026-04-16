@@ -11,6 +11,8 @@ class FileViewModel{
 		FileViewModel();
   
 		bool NewFile(std::filesystem::path& writeLocation,std::string& objectName);
+		
+		bool RenameFile(std::filesystem::path& oldPath,std::string& newFileName);
 
 		std::vector<std::filesystem::directory_entry> 
 						ReadDirectory(std::filesystem::path& readPath); 
