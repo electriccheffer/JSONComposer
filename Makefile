@@ -48,10 +48,12 @@ build: $(executable)
 
 test: $(testTarget)
 	$(testTarget) --gtest_color=yes
-	rm -f $(buildDirectory)/*
+	make clean
 
 clean: 
 	rm -f $(executable)
+	rm -f $(testObjectFiles)
+	rm -f $(testTarget)
 
 $(testTarget):$(testObjectFiles)
 	g++ $(CXXFlags) $(testScripts)  $(testObjectFiles) \

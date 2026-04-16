@@ -119,3 +119,28 @@ TEST(FileViewModelTest,DeleteDirectory){
 	EXPECT_FALSE(fileViewModel.DeleteFile(deletionPath));	
 
 }
+
+TEST(FileViewModelTest,DeleteDirectoryMethod){
+
+	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
+					     "deleteDirectory" / "deleteMe.txt";
+	std::filesystem::path directoryCreationPath = std::filesystem::path("test") / 
+						"testData" / "deleteDirectory"; 		
+	std::filesystem::create_directory(directoryCreationPath);
+	std::ofstream file(deletionPath);
+	EXPECT_TRUE(file);
+	FileViewModel fileViewModel;
+	bool result = fileViewModel.DeleteDirectory(directoryCreationPath);
+	EXPECT_TRUE(result);
+}
+
+TEST(FileViewModelTest,DeleteNonDirectory){
+
+	std::filesystem::path directoryCreationPath = std::filesystem::path("test") / 
+						"testData" / "deleteDirectory"; 
+	
+	FileViewModel fileViewModel;
+	bool result = fileViewModel.DeleteDirectory(directoryCreationPath);
+	EXPECT_FALSE(result);	
+}
+

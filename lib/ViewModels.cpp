@@ -49,3 +49,12 @@ bool FileViewModel::DeleteFile(std::filesystem::path& deletionPath){
 	return result; 	
 
 }
+
+bool FileViewModel::DeleteDirectory(std::filesystem::path& deletionPath){
+
+	int numberRemoved =  std::filesystem::remove_all(deletionPath);
+	if(numberRemoved == 0){
+		return false; 
+	}
+	return true; 
+}

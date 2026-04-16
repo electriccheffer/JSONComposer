@@ -16,7 +16,9 @@ class FileViewModel{
 						ReadDirectory(std::filesystem::path& readPath); 
 
 		bool DeleteFile(std::filesystem::path& deletionPath); 			
-
+		
+		bool DeleteDirectory(std::filesystem::path& deletionPath); 
+		
 	protected:
 };  
 

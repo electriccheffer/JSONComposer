@@ -1,6 +1,5 @@
 - Directory window 
 	- Make Directory Window Controller
-		- Delete a file 
 		- Make a directory
 		- Set Project Root
 	- Display above features in window
