@@ -16,6 +16,7 @@ void FileBrowserWindow::Render(){
 	ImGui::SetNextWindowSize(ImVec2(this->size.x * 0.7f, this->size.y * 0.5f));
 	ImGui::Begin("Right-Top", nullptr, 
 			ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+	
 	ImGui::Text("Right Top Panel");
 	ImGui::End();
 }

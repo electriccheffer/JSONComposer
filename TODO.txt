@@ -1,7 +1,5 @@
 - Directory window 
 	- Display above features in window
-		- Update gitignore 
-		- Clean up scripts
 		- UI Test 
 - Object Editor
 	- Create Object for managing raw data types 

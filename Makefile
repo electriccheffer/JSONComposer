@@ -20,7 +20,9 @@ buildFiles = $(sourceDirectory)/main.cpp \
 	     third_party/imgui/imgui_widgets.cpp \
 	     third_party/imgui/backends/imgui_impl_glfw.cpp \
 	     third_party/imgui/backends/imgui_impl_opengl3.cpp \
-	     $(libraryDirectory)/Windows.cpp
+	     $(libraryDirectory)/Windows.cpp \
+	     $(libraryDirectory)/IO.cpp \
+	     $(libraryDirectory)/ViewModels.cpp
 	     
 
 executable = $(buildDirectory)/main
