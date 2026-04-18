@@ -1,5 +1,4 @@
 - Directory window 
-	- Create a Directory
 	- Display above features in window
 		- Update gitignore 
 		- Clean up scripts
