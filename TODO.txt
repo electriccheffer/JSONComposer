@@ -1,6 +1,4 @@
 - Directory window 
-	- Create Test Subclass For FileViewModel 
-	- Set the Project Root
 	- Create a Directory
 	- Display above features in window
 		- Update gitignore 

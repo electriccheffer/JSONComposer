@@ -190,3 +190,34 @@ TEST(FileViewModelTest,SetProjectRoot){
 	EXPECT_EQ(newPath,projectRootResult);	 
 }
 
+TEST(FileViewModelTest,CreateDirectory){
+		
+	std::filesystem::path writePath = std::filesystem::path("test") / "testData" / 
+						"makeDirectory" ; 
+	std::filesystem::path newDirectory = std::filesystem::path(writePath) / "NewDir"; 
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.CreateDirectory(newDirectory);
+	EXPECT_TRUE(result);
+	bool existanceCheck = std::filesystem::exists(newDirectory);
+	EXPECT_TRUE(existanceCheck);    
+	if(result == true){
+		
+		fileViewModel.DeleteDirectory(newDirectory); 
+	}
+	
+}
+
+TEST(FileViewModelTest,CreateDirectoryNonExistance){
+		
+	std::filesystem::path writePath = std::filesystem::path("FakeDir") / "testData" / 
+						"makeDirectory" ; 
+	FileViewModel fileViewModel; 
+	EXPECT_THROW(fileViewModel.CreateDirectory(writePath),std::filesystem::filesystem_error);
+	bool existanceCheck = std::filesystem::exists(writePath);
+	EXPECT_FALSE(existanceCheck);    
+	if(existanceCheck == true){
+		
+		fileViewModel.DeleteDirectory(writePath); 
+	}
+	
+}
