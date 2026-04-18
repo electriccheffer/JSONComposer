@@ -34,7 +34,6 @@ int main(int argv, char** argc){
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-
 	while(!glfwWindowShouldClose(window)){
 		
 		ImGui_ImplOpenGL3_NewFrame();

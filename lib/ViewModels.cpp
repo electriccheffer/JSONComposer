@@ -72,3 +72,13 @@ bool FileViewModel::DeleteDirectory(std::filesystem::path& deletionPath){
 	}
 	return true; 
 }
+
+std::filesystem::path& FileViewModel::GetProjectRoot(){
+
+	return this->projectRoot; 
+}
+
+void FileViewModel::SetProjectRoot(std::filesystem::path& newProjectRoot){
+
+	this->projectRoot = newProjectRoot; 
+}

@@ -172,3 +172,21 @@ TEST(FileViewModelTest,RenameFilePathNotExist){
 	bool result = fileViewModel.RenameFile(renameFilePath,newName);	
 	EXPECT_FALSE(result);	
 }
+
+TEST(FileViewModelTest,InitialProjectRoot){
+
+	std::filesystem::path oldPath = std::filesystem::current_path();
+	FileViewModel fileViewModel; 
+	std::filesystem::path initializationPath = fileViewModel.GetProjectRoot(); 
+	EXPECT_EQ(oldPath,initializationPath);
+}
+
+TEST(FileViewModelTest,SetProjectRoot){
+
+	std::filesystem::path newPath = std::filesystem::path("test");
+	FileViewModel fileViewModel; 
+	fileViewModel.SetProjectRoot(newPath); 
+	std::filesystem::path projectRootResult = fileViewModel.GetProjectRoot(); 
+	EXPECT_EQ(newPath,projectRootResult);	 
+}
+

@@ -19,9 +19,14 @@ class FileViewModel{
 
 		bool DeleteFile(std::filesystem::path& deletionPath); 			
 		
-		bool DeleteDirectory(std::filesystem::path& deletionPath); 
+		bool DeleteDirectory(std::filesystem::path& deletionPath);
 		
+		std::filesystem::path& GetProjectRoot(); 	
+	
+		void SetProjectRoot(std::filesystem::path& newProjectRoot);
+		 
 	protected:
+		std::filesystem::path projectRoot = std::filesystem::current_path(); 
 };  
 
 #endif

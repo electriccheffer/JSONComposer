@@ -5,40 +5,42 @@
 
 class ObjectBrowserWindow{
 	
-	protected:
-		ImVec2& size; 
-		ImVec2& position; 	
+ 	
 	public: 
 		ObjectBrowserWindow(ImVec2& size,ImVec2& position):
-						size(size),position(position){}
+						size(size),position(position){} 
 		void Render(); 
+	
+	protected:
+		ImVec2& size; 
+		ImVec2& position;
 }; 
 
 class FileBrowserWindow{
 	
-	protected: 
-		ImVec2& size; 
-		ImVec2& position; 	
-	
+
 	public: 
 		FileBrowserWindow(ImVec2& size,ImVec2& position):
 						size(size),position(position){}
 
 		void Render(); 
+
+	protected: 
+		ImVec2& size; 
+		ImVec2& position; 	
 }; 
 
 class InputWindow{
 	
-	protected:
-		ImVec2& size; 
-		ImVec2& position;
-
 	public:
 		InputWindow(ImVec2& size,ImVec2& position):
 						size(size),position(position){}
 		
 		void Render(); 
 
+	protected:
+		ImVec2& size; 
+		ImVec2& position;
 };
 
 #endif
