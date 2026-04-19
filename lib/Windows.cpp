@@ -36,17 +36,31 @@ void FileBrowserWindow::Render(){
 void FileBrowserWindow::RenderFilesAndDirectories(
 				std::vector<std::filesystem::directory_entry>& directoryDataList){
 	
-	int length = directoryDataList.size(); 
+	int length = directoryDataList.size();
+	//TODO: Start adding buttons 
 	for(int i = 0 ; i < length ; i++){
 		std::filesystem::directory_entry entry = directoryDataList[i]; 
 		std::filesystem::path filePath(entry.path());
 		std::string pathString(filePath.string());	
-		if(entry.is_directory()){	
-			
-			if(ImGui::TreeNode(pathString.c_str())){
-			
+		if(entry.is_directory()){
+			ImGui::PushID(pathString.c_str());	
+			bool isOpen = ImGui::TreeNode(pathString.c_str()); 
+			ImGui::SameLine();	
+			ImGui::Button("Rename");
+			ImGui::SameLine();	
+			ImGui::Button("Delete");
+			ImGui::SameLine();	
+			ImGui::Button("Move");
+			ImGui::SameLine();	
+			ImGui::Button("New File");
+			ImGui::SameLine();	
+			ImGui::Button("New Directory");
+			if(isOpen){
+				
+				
 				if(i == length - 1){
 					ImGui::TreePop(); 
+					ImGui::PopID(); 
 					break; 
 				}
 				
@@ -66,6 +80,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(
 				}	
 				ImGui::TreePop(); 	
 			}
+			ImGui::PopID();
 		}
 		else{
 			ImGui::Text("%s",pathString.c_str()); 
