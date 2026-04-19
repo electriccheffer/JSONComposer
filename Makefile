@@ -45,7 +45,9 @@ testObjectFiles = $(buildDirectory)/IO.o \
 testTarget = $(buildDirectory)/test_runner
 
 build: $(executable)
+	cd data
 	$(executable)
+	cd ..
 	make clean
 
 test: $(testTarget)

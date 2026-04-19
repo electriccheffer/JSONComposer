@@ -4,6 +4,7 @@
 #include "../third_party/imgui/backends/imgui_impl_opengl3.h"
 #include "../third_party/imgui/backends/imgui_impl_glfw.h"
 #include "../include/Windows.hpp"
+#include <filesystem>
 
 int main(int argv, char** argc){
 	
@@ -28,12 +29,14 @@ int main(int argv, char** argc){
 	}
 	
 	glfwMakeContextCurrent(window);
-	
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImGui::GetIO().IniFilename = nullptr;
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
-
+	std::filesystem::path newPath("data"); 
+	std::filesystem::current_path(newPath);	
+	
 	while(!glfwWindowShouldClose(window)){
 		
 		ImGui_ImplOpenGL3_NewFrame();

@@ -30,6 +30,7 @@ class FileBrowserWindow{
 		ImVec2& position; 	
 }; 
 
+
 class InputWindow{
 	
 	public:
