@@ -2,6 +2,7 @@
 #define WINDOWS_HPP
 #include "../third_party/imgui/imgui.h"
 #include <vector>
+#include <filesystem> 
 
 class ObjectBrowserWindow{
 	
@@ -14,6 +15,7 @@ class ObjectBrowserWindow{
 	protected:
 		ImVec2& size; 
 		ImVec2& position;
+		 
 }; 
 
 class FileBrowserWindow{
@@ -26,6 +28,8 @@ class FileBrowserWindow{
 		void Render(); 
 
 	protected: 
+		void RenderFilesAndDirectories(
+				std::vector<std::filesystem::directory_entry>& directoryDataList);
 		ImVec2& size; 
 		ImVec2& position; 	
 }; 

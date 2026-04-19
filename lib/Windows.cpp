@@ -29,12 +29,20 @@ void FileBrowserWindow::Render(){
 	ImGui::SameLine(); 
 	ImGui::Button("Change Project Root"); 	
 	ImGui::Text("-FILE EXPLORER-");
+	this->RenderFilesAndDirectories(directoryDataList);		
+	ImGui::End();
+}
+
+void FileBrowserWindow::RenderFilesAndDirectories(
+				std::vector<std::filesystem::directory_entry>& directoryDataList){
+	
 	int length = directoryDataList.size(); 
 	for(int i = 0 ; i < length ; i++){
 		std::filesystem::directory_entry entry = directoryDataList[i]; 
 		std::filesystem::path filePath(entry.path());
 		std::string pathString(filePath.string());	
 		if(entry.is_directory()){	
+			
 			if(ImGui::TreeNode(pathString.c_str())){
 			
 				if(i == length - 1){
@@ -62,8 +70,8 @@ void FileBrowserWindow::Render(){
 		else{
 			ImGui::Text("%s",pathString.c_str()); 
 		}	
-	}	
-	ImGui::End();
+	}
+
 }
 
 void InputWindow::Render(){
