@@ -39,10 +39,27 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 	
 	std::vector<std::filesystem::directory_entry> rootList = map[projectRoot.string()];	
 	
-	for(std::filesystem::directory_entry entry : rootList){
+	if(rootList.size() == 0){
 
-		if(entry.is_directory()){
+			
+	
+	}
+		
+	for(std::filesystem::directory_entry entry : rootList){
+		if(entry.is_directory())
+			{
+			
 			bool isOpen = ImGui::TreeNode(entry.path().string().c_str());
+			ImGui::SameLine(); 
+			ImGui::Button("Rename");
+			ImGui::SameLine();
+			ImGui::Button("Delete");
+			ImGui::SameLine();
+			ImGui::Button("Move");
+			ImGui::SameLine();
+			ImGui::Button("New File");
+			ImGui::SameLine();
+			ImGui::Button("New Dir");
 			if(isOpen){
 				this->RenderFilesAndDirectories(entry,map);	
 				ImGui::TreePop(); 
@@ -76,6 +93,16 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 
 		if(localEntry.is_directory()){
 			bool isOpen = ImGui::TreeNode(localEntry.path().string().c_str()); 
+			ImGui::SameLine(); 
+			ImGui::Button("Rename");
+			ImGui::SameLine();
+			ImGui::Button("Delete");
+			ImGui::SameLine();
+			ImGui::Button("Move");
+			ImGui::SameLine();
+			ImGui::Button("New File");
+			ImGui::SameLine();
+			ImGui::Button("New Dir");
 			if(isOpen){
 				this->RenderFilesAndDirectories(localEntry,map);	
 				ImGui::TreePop(); 

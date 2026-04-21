@@ -1,7 +1,4 @@
 - Directory window 
-	- Reimplement the traversal statetgy
-	- Create buttons without activity
-	- Check UI and commit 
 	- Create buttons with activity
 - Object Editor
 	- Create Object for managing raw data types 
