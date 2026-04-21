@@ -1,6 +1,9 @@
+#include <unordered_map>
+#include <queue>
 #include "../include/Windows.hpp"
 #include "../include/IO.hpp"
 #include "../include/ViewModels.hpp"
+#include <string> 
 
 void ObjectBrowserWindow::Render(){
 
@@ -18,80 +21,81 @@ void FileBrowserWindow::Render(){
 	ImGui::SetNextWindowSize(ImVec2(this->size.x * 0.7f, this->size.y * 0.5f));
 	ImGui::Begin("Right-Top", nullptr, 
 			ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-	FileViewModel fileViewModel; 
-	std::filesystem::path projectRoot = fileViewModel.GetProjectRoot(); 
-	DirectoryData directoryData(projectRoot);
-	std::vector<std::filesystem::directory_entry> directoryDataList = 
-								directoryData.GetDirectoryData();
-	
+	std::filesystem::path projectRoot = this->fileViewModel.GetProjectRoot(); 
 	std::string rootPathString = "Project Root: " + projectRoot.string();
 	ImGui::Text("%s" ,rootPathString.c_str());
 	ImGui::SameLine(); 
 	ImGui::Button("Change Project Root"); 	
 	ImGui::Text("-FILE EXPLORER-");
-	this->RenderFilesAndDirectories(directoryDataList);		
+	this->RenderFilesAndDirectories();		
 	ImGui::End();
 }
 
-void FileBrowserWindow::RenderFilesAndDirectories(
-				std::vector<std::filesystem::directory_entry>& directoryDataList){
+void FileBrowserWindow::RenderFilesAndDirectories(){
 	
-	int length = directoryDataList.size();
-	//TODO: Incorrect Refactor 
-	for(int i = 0 ; i < length ; i++){
-		std::filesystem::directory_entry entry = directoryDataList[i]; 
-		std::filesystem::path filePath(entry.path());
-		std::string pathString(filePath.string());	
+	std::filesystem::path projectRoot = this->fileViewModel.GetProjectRoot();
+	std::unordered_map<std::string,std::vector<std::filesystem::directory_entry>> map = 
+						this->fileViewModel.ReadDirectory(projectRoot);
+	
+	std::vector<std::filesystem::directory_entry> rootList = map[projectRoot.string()];	
+	
+	for(std::filesystem::directory_entry entry : rootList){
+
 		if(entry.is_directory()){
-			ImGui::PushID(pathString.c_str());	
-			ImGui::SetNextItemOpen(false, ImGuiCond_Once);
-			bool isOpen = 
-				ImGui::TreeNode(pathString.c_str()); 
-			ImGui::SameLine();	
-			ImGui::Button("Rename");
-			ImGui::SameLine();	
-			ImGui::Button("Delete");
-			ImGui::SameLine();	
-			ImGui::Button("Move");
-			ImGui::SameLine();	
-			ImGui::Button("New File");
-			ImGui::SameLine();	
-			ImGui::Button("New Directory");
+			bool isOpen = ImGui::TreeNode(entry.path().string().c_str());
 			if(isOpen){
-				
-				if(i == length - 1){
-					ImGui::TreePop(); 
-					ImGui::PopID(); 
-					break; 
-				}
-					
-				for(int j = i+1 ; j < length  ; j++){
-					 
-					std::filesystem::directory_entry 
-							fileEntry(directoryDataList[j]); 
-					std::filesystem::path 
-						directorySubFilePath(fileEntry.path()); 
-					if(fileEntry.is_directory()){
-						i = j - 1; 
-						break; 
-					}
-					std::string 
-						subFilePathString(directorySubFilePath.string()); 
-					if(j == length - 1){
-						
-						i = j - 1; 
-						break; 
-					}	
-				}
-				ImGui::TreePop(); 	
+				this->RenderFilesAndDirectories(entry,map);	
+				ImGui::TreePop(); 
 			}
-			ImGui::PopID();
+		
 		}
-		else{
-			ImGui::Text("%s",pathString.c_str()); 
+		else{	
+			std::filesystem::path entryPath = entry.path();
+			ImGui::Text("%s",entryPath.string().c_str());
+			ImGui::PushID(entryPath.string().c_str()); 
+			ImGui::SameLine();
+			ImGui::Button("Rename");
+			ImGui::SameLine();
+			ImGui::Button("Delete");
+			ImGui::SameLine();
+			ImGui::Button("Move");
+			ImGui::PopID(); 
 		}	
 	}
+			
+}
 
+
+void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_entry& entry,
+	std::unordered_map<std::string,std::vector<std::filesystem::directory_entry>>& map){
+	
+	std::filesystem::path localPath = entry.path(); 
+	std::string stringPath = localPath.string(); 
+	std::vector<std::filesystem::directory_entry> fileList = map[stringPath.c_str()]; 
+	for(std::filesystem::directory_entry localEntry : fileList){
+
+		if(localEntry.is_directory()){
+			bool isOpen = ImGui::TreeNode(localEntry.path().string().c_str()); 
+			if(isOpen){
+				this->RenderFilesAndDirectories(localEntry,map);	
+				ImGui::TreePop(); 
+			}
+		
+				 
+		}
+		else{
+			ImGui::Text("%s",localEntry.path().string().c_str());
+			ImGui::PushID(localEntry.path().string().c_str()); 
+			ImGui::SameLine();
+			ImGui::Button("Rename");
+			ImGui::SameLine();
+			ImGui::Button("Delete");
+			ImGui::SameLine();
+			ImGui::Button("Move");
+			ImGui::PopID();
+		}
+	}	
+		
 }
 
 void InputWindow::Render(){

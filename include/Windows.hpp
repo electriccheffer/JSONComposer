@@ -3,6 +3,7 @@
 #include "../third_party/imgui/imgui.h"
 #include <vector>
 #include <filesystem> 
+#include "../include/ViewModels.hpp"
 
 class ObjectBrowserWindow{
 	
@@ -22,16 +23,20 @@ class FileBrowserWindow{
 	
 
 	public: 
-		FileBrowserWindow(ImVec2& size,ImVec2& position):
-						size(size),position(position){}
+		FileBrowserWindow(ImVec2& size,ImVec2& position,FileViewModel& fileViewModel):
+				size(size),position(position),fileViewModel(fileViewModel){}
 
 		void Render(); 
 
 	protected: 
-		void RenderFilesAndDirectories(
-				std::vector<std::filesystem::directory_entry>& directoryDataList);
+		void RenderFilesAndDirectories();
+		void RenderFilesAndDirectories(std::filesystem::directory_entry& entry,
+						std::unordered_map
+						<std::string,
+					std::vector<std::filesystem::directory_entry>>& map);
 		ImVec2& size; 
-		ImVec2& position; 	
+		ImVec2& position; 
+		FileViewModel& fileViewModel; 	
 }; 
 
 

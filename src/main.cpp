@@ -5,6 +5,7 @@
 #include "../third_party/imgui/backends/imgui_impl_glfw.h"
 #include "../include/Windows.hpp"
 #include <filesystem>
+#include "../include/ViewModels.hpp"
 
 int main(int argv, char** argc){
 	
@@ -35,7 +36,7 @@ int main(int argv, char** argc){
 	ImGui_ImplOpenGL3_Init("#version 330");
 	std::filesystem::path newPath("data"); 
 	std::filesystem::current_path(newPath);	
-	
+	FileViewModel fileViewModel; 	
 	while(!glfwWindowShouldClose(window)){
 		
 		ImGui_ImplOpenGL3_NewFrame();
@@ -51,7 +52,7 @@ int main(int argv, char** argc){
 		objectBrowserWindow.Render(); 	
 
 		// Right panel - top half
-		FileBrowserWindow browserWindow(size,position);
+		FileBrowserWindow browserWindow(size,position,fileViewModel);
 		browserWindow.Render(); 	
 				
 		// Left panel - bottom half
