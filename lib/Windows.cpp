@@ -37,14 +37,16 @@ void FileBrowserWindow::RenderFilesAndDirectories(
 				std::vector<std::filesystem::directory_entry>& directoryDataList){
 	
 	int length = directoryDataList.size();
-	//TODO: Start adding buttons 
+	//TODO: Incorrect Refactor 
 	for(int i = 0 ; i < length ; i++){
 		std::filesystem::directory_entry entry = directoryDataList[i]; 
 		std::filesystem::path filePath(entry.path());
 		std::string pathString(filePath.string());	
 		if(entry.is_directory()){
 			ImGui::PushID(pathString.c_str());	
-			bool isOpen = ImGui::TreeNode(pathString.c_str()); 
+			ImGui::SetNextItemOpen(false, ImGuiCond_Once);
+			bool isOpen = 
+				ImGui::TreeNode(pathString.c_str()); 
 			ImGui::SameLine();	
 			ImGui::Button("Rename");
 			ImGui::SameLine();	
@@ -57,15 +59,14 @@ void FileBrowserWindow::RenderFilesAndDirectories(
 			ImGui::Button("New Directory");
 			if(isOpen){
 				
-				
 				if(i == length - 1){
 					ImGui::TreePop(); 
 					ImGui::PopID(); 
 					break; 
 				}
-				
-				for(int j = i+1 ; j < length  ; j++){
 					
+				for(int j = i+1 ; j < length  ; j++){
+					 
 					std::filesystem::directory_entry 
 							fileEntry(directoryDataList[j]); 
 					std::filesystem::path 
@@ -76,8 +77,12 @@ void FileBrowserWindow::RenderFilesAndDirectories(
 					}
 					std::string 
 						subFilePathString(directorySubFilePath.string()); 
-					ImGui::Text("%s",subFilePathString.c_str()); 
-				}	
+					if(j == length - 1){
+						
+						i = j - 1; 
+						break; 
+					}	
+				}
 				ImGui::TreePop(); 	
 			}
 			ImGui::PopID();

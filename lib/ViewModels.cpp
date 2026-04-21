@@ -4,6 +4,7 @@
 #include <fstream> 
 #include <string> 
 #include <vector> 
+#include <unordered_map> 
 
 FileViewModel::FileViewModel(){}
 
@@ -35,11 +36,11 @@ bool FileViewModel::RenameFile(std::filesystem::path& oldPath,std::string& newFi
 	return result; 
 }
 
-std::vector<std::filesystem::directory_entry> FileViewModel::ReadDirectory(
-						std::filesystem::path& readPath){
+std::unordered_map<std::string,std::vector<std::filesystem::directory_entry>>
+		 		FileViewModel::ReadDirectory(std::filesystem::path& readPath){
 
 	DirectoryData directoryData(readPath); 
-	std::vector<std::filesystem::directory_entry> result; 
+	std::unordered_map<std::string,std::vector<std::filesystem::directory_entry>> result; 
 	try{
 		result = directoryData.GetDirectoryData(); 
 	}

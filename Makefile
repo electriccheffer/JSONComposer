@@ -48,6 +48,7 @@ build: $(executable)
 	cd data
 	$(executable)
 	cd ..
+	rm -f data/imgui.ini
 	make clean
 
 test: $(testTarget)

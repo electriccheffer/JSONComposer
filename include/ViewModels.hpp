@@ -14,7 +14,7 @@ class FileViewModel{
 		
 		bool RenameFile(std::filesystem::path& oldPath,std::string& newFileName);
 
-		std::vector<std::filesystem::directory_entry> 
+		std::unordered_map<std::string,std::vector<std::filesystem::directory_entry>> 
 						ReadDirectory(std::filesystem::path& readPath); 
 
 		bool DeleteFile(std::filesystem::path& deletionPath); 			

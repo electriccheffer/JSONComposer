@@ -31,7 +31,6 @@ int main(int argv, char** argc){
 	glfwMakeContextCurrent(window);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGui::GetIO().IniFilename = nullptr;
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 	std::filesystem::path newPath("data"); 

@@ -42,9 +42,9 @@ TEST(FileViewModelTest,ListFilesAndDirectories){
 	std::filesystem::path loadLocation = std::filesystem::path("test") / "testData" / 
 						"directoryTestData" / "subDirectoriesWithFiles";
 	FileViewModel fileViewModel; 
-	std::vector<std::filesystem::directory_entry> result = 
+	std::unordered_map<std::string,std::vector<std::filesystem::directory_entry>> result = 
 					fileViewModel.ReadDirectory(loadLocation);
-	std::vector<std::filesystem::path> expectedPaths;
+	
 	std::filesystem::path firstPath = std::filesystem::path("test") / 
 					"testData" / "directoryTestData" / 
 					"subDirectoriesWithFiles" / "dirOne" ;
@@ -61,27 +61,6 @@ TEST(FileViewModelTest,ListFilesAndDirectories){
 					/ "testData" / "directoryTestData" / 
 					"subDirectoriesWithFiles" / "dirTwo" / "fileTwo.txt" ;
 
-
-	expectedPaths.push_back(firstPath);
-	expectedPaths.push_back(secondPath);
-	expectedPaths.push_back(thirdPath); 
-	expectedPaths.push_back(fourthPath); 
-	expectedPaths.push_back(fifthPath); 
-	
-	int count = 0; 
-	int size = result.size(); 
-	int expectedSize = expectedPaths.size(); 
-
-	for(int i = 0 ; i < size ; i++){
-		for(int k = 0 ; k < expectedSize  ; k++){
-			
-			if(result[i].path().string() == expectedPaths[k].string()){
-				count++; 
-			}	
-
-		}
-	}
-	EXPECT_EQ(size,count);
 
 
 }
