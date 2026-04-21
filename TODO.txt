@@ -1,4 +1,5 @@
 - Directory window 
+	- Make New File and New Dir bottom buttons
 	- Create buttons with activity
 - Object Editor
 	- Create Object for managing raw data types 

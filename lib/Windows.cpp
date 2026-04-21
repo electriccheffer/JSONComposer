@@ -46,9 +46,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 	}
 		
 	for(std::filesystem::directory_entry entry : rootList){
-		if(entry.is_directory())
-			{
-			
+		ImGui::PushID(entry.path().string().c_str());
+		if(entry.is_directory()){
 			bool isOpen = ImGui::TreeNode(entry.path().string().c_str());
 			ImGui::SameLine(); 
 			ImGui::Button("Rename");
@@ -77,7 +76,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			ImGui::SameLine();
 			ImGui::Button("Move");
 			ImGui::PopID(); 
-		}	
+		}
+		ImGui::PopID(); 	
 	}
 			
 }
@@ -90,7 +90,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 	std::string stringPath = localPath.string(); 
 	std::vector<std::filesystem::directory_entry> fileList = map[stringPath.c_str()]; 
 	for(std::filesystem::directory_entry localEntry : fileList){
-
+		ImGui::PushID(localEntry.path().string().c_str());
 		if(localEntry.is_directory()){
 			bool isOpen = ImGui::TreeNode(localEntry.path().string().c_str()); 
 			ImGui::SameLine(); 
@@ -121,6 +121,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			ImGui::Button("Move");
 			ImGui::PopID();
 		}
+		ImGui::PopID(); 
 	}	
 		
 }
