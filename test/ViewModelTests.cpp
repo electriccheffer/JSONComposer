@@ -60,8 +60,9 @@ TEST(FileViewModelTest,ListFilesAndDirectories){
 	std::filesystem::path fifthPath = std::filesystem::path("test") 
 					/ "testData" / "directoryTestData" / 
 					"subDirectoriesWithFiles" / "dirTwo" / "fileTwo.txt" ;
-
-
+	
+	std::vector<std::filesystem::directory_entry> topList = result[loadLocation.string()]; 
+	EXPECT_EQ(3,topList.size());
 
 }
 
