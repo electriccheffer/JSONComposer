@@ -46,7 +46,32 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			ImGui::SameLine(); 
 			if(ImGui::Button("Rename")){
 				
+				
+				ImGui::OpenPopup("Rename Directory");
+				
 			}
+				
+			static char buffer[256]; 
+			if(ImGui::BeginPopup("Rename Directory")){
+				ImGui::Text("New Directory Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+						buffer, 
+						sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered)
+				{
+					ImGui::CloseCurrentPopup();	
+					// Implement RenameDirectory
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
+			}		
 			ImGui::SameLine();
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath = entry.path();  
@@ -77,7 +102,30 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			ImGui::PushID(entryPath.string().c_str()); 
 			ImGui::SameLine();
 			if(ImGui::Button("Rename")){
-
+				
+					ImGui::OpenPopup("Rename File");
+					
+			}
+				
+			static char buffer[256]; 
+			
+			if(ImGui::BeginPopup("Rename File")){
+				ImGui::Text("New File Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+					buffer, 
+					sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered){
+					ImGui::CloseCurrentPopup();	
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
 			}
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath = entry.path();  
@@ -108,15 +156,23 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			bool isOpen = ImGui::TreeNode(localEntry.path().string().c_str()); 
 			ImGui::SameLine(); 
 			if(ImGui::Button("Rename")){
-
+				
+				ImGui::OpenPopup("Rename Directory");
+			}
+			static char buffer[256]; 
+			if(ImGui::BeginPopup("Rename Directory")){
+				if(ImGui::InputText("New Name for file: ", 
+						buffer, 
+						sizeof(buffer)))
+				{
+					ImGui::CloseCurrentPopup();	
+				}
+				ImGui::EndPopup();
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Delete")){
-				// Are you sure 
-				// log it 
 				std::filesystem::path deletePath =localEntry.path();  
 				bool result = this->fileViewModel.DeleteDirectory(deletePath);
-				// Log result 	
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Move")){
@@ -143,15 +199,36 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			ImGui::SameLine();
 			if(ImGui::Button("Rename")){
 
-
+				
+				ImGui::OpenPopup("Rename File");
+					
+			}
+				
+			static char buffer[256]; 
+			
+			if(ImGui::BeginPopup("Rename File")){
+				ImGui::Text("New File Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+					buffer, 
+					sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered)
+				{
+					ImGui::CloseCurrentPopup();	
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Delete")){
-				// Are you sure 
-				// log it 
 				std::filesystem::path deletePath =localEntry.path();  
 				bool result = this->fileViewModel.DeleteFile(deletePath);
-				// Log result 	
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Move")){
