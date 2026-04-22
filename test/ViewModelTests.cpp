@@ -173,10 +173,11 @@ TEST(FileViewModelTest,SetProjectRoot){
 TEST(FileViewModelTest,CreateDirectory){
 		
 	std::filesystem::path writePath = std::filesystem::path("test") / "testData" / 
-						"makeDirectory" ; 
-	std::filesystem::path newDirectory = std::filesystem::path(writePath) / "NewDir"; 
+						"makeDirectory" ;
+	std::string newDirectoryName = "NewDir"; 
+	std::filesystem::path newDirectory = std::filesystem::path(writePath); 
 	FileViewModel fileViewModel; 
-	bool result = fileViewModel.CreateDirectory(newDirectory);
+	bool result = fileViewModel.CreateDirectory(newDirectory,newDirectoryName);
 	EXPECT_TRUE(result);
 	bool existanceCheck = std::filesystem::exists(newDirectory);
 	EXPECT_TRUE(existanceCheck);    
@@ -191,8 +192,10 @@ TEST(FileViewModelTest,CreateDirectoryNonExistance){
 		
 	std::filesystem::path writePath = std::filesystem::path("FakeDir") / "testData" / 
 						"makeDirectory" ; 
+	std::string newDirectoryName = "NewDir"; 
 	FileViewModel fileViewModel; 
-	EXPECT_THROW(fileViewModel.CreateDirectory(writePath),std::filesystem::filesystem_error);
+	EXPECT_THROW(fileViewModel.CreateDirectory(writePath,newDirectoryName),
+					std::filesystem::filesystem_error);
 	bool existanceCheck = std::filesystem::exists(writePath);
 	EXPECT_FALSE(existanceCheck);    
 	if(existanceCheck == true){

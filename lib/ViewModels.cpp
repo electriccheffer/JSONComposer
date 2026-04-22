@@ -75,8 +75,10 @@ bool FileViewModel::DeleteDirectory(std::filesystem::path& deletionPath){
 }
 
 
-bool FileViewModel::CreateDirectory(std::filesystem::path& creationPath){
+bool FileViewModel::CreateDirectory(std::filesystem::path& creationPath,
+			            std::string& newDirectoryName){
 	
+	creationPath /= newDirectoryName; 	
 	bool result = false; 	
 	try{
 		result = std::filesystem::create_directory(creationPath);

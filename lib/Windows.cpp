@@ -46,9 +46,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			ImGui::SameLine(); 
 			if(ImGui::Button("Rename")){
 				
-				
 				ImGui::OpenPopup("Rename Directory");
-				
 			}
 				
 			static char buffer[256]; 
@@ -62,10 +60,9 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				bool textEntered = ImGui::Button("Ok");
 				ImGui::SameLine(); 
 				bool canceled = ImGui::Button("Cancel");
-				if(textEntered)
-				{
+				if(textEntered){
+					
 					ImGui::CloseCurrentPopup();	
-					// Implement RenameDirectory
 				}
 				if(canceled){
 					ImGui::CloseCurrentPopup();	
@@ -99,6 +96,11 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				ImGui::SameLine(); 
 				bool canceled = ImGui::Button("Cancel");
 				if(textEntered){
+					
+					std::filesystem::path entryPath = entry.path(); 
+					std::string newFileName(buffer); 
+					this->fileViewModel.NewFile(entryPath,
+								    newFileName);
 					ImGui::CloseCurrentPopup();	
 				}
 				if(canceled){
@@ -120,10 +122,12 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				bool textEntered = ImGui::Button("Ok");
 				ImGui::SameLine(); 
 				bool canceled = ImGui::Button("Cancel");
-				if(textEntered)
-				{
+				if(textEntered){
+					std::filesystem::path entryPath = entry.path(); 	
+					std::string newDirectoryName(buffer);
+					this->fileViewModel.CreateDirectory(entryPath,
+									   newDirectoryName);
 					ImGui::CloseCurrentPopup();	
-					// Implement RenameDirectory
 				}
 				if(canceled){
 					ImGui::CloseCurrentPopup();	
@@ -148,7 +152,6 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			}
 				
 			static char buffer[256]; 
-			
 			if(ImGui::BeginPopup("Rename File")){
 				ImGui::Text("New File Name: ");
 				ImGui::SameLine(); 
@@ -160,6 +163,9 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				ImGui::SameLine(); 
 				bool canceled = ImGui::Button("Cancel");
 				if(textEntered){
+					std::string bufferString(buffer);
+					this->fileViewModel.RenameFile(entryPath,
+								      bufferString);
 					ImGui::CloseCurrentPopup();	
 				}
 				if(canceled){
@@ -167,6 +173,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				}	
 				ImGui::EndPopup();
 			}
+			ImGui::SameLine(); 
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath = entry.path();  
 				bool result = this->fileViewModel.DeleteFile(deletePath);
@@ -221,11 +228,58 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			
 			ImGui::SameLine();
 			if(ImGui::Button("New File")){
-			
+				
+				ImGui::OpenPopup("New File"); 
+			}
+			if(ImGui::BeginPopup("New File")){
+
+				ImGui::Text("New File Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+					buffer, 
+					sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered){
+					
+					std::filesystem::path entryPath = localEntry.path(); 
+					std::string newFileName(buffer); 
+					this->fileViewModel.NewFile(entryPath,
+								    newFileName);
+					ImGui::CloseCurrentPopup();	
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("New Dir")){
-			
+				ImGui::OpenPopup("New Dir"); 
+			}
+			if(ImGui::BeginPopup("New Dir")){
+				ImGui::Text("New Directory Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+						buffer, 
+						sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered){
+					std::filesystem::path entryPath = localEntry.path(); 	
+					std::string newDirectoryName(buffer);
+					this->fileViewModel.CreateDirectory(entryPath,
+									   newDirectoryName);
+					ImGui::CloseCurrentPopup();	
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
 			}
 			if(isOpen){
 				this->RenderFilesAndDirectories(localEntry,map);	
