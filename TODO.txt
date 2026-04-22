@@ -1,5 +1,8 @@
 - Directory window 
 	- Make New File and New Dir bottom buttons
+	- Make popups locally
+	- Make popups in a method
+	- Command pattern
 	- Create buttons with activity
 - Object Editor
 	- Create Object for managing raw data types 

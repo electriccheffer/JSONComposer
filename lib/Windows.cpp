@@ -39,26 +39,32 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 	
 	std::vector<std::filesystem::directory_entry> rootList = map[projectRoot.string()];	
 	
-	if(rootList.size() == 0){
-
-			
-	
-	}
-		
 	for(std::filesystem::directory_entry entry : rootList){
 		ImGui::PushID(entry.path().string().c_str());
 		if(entry.is_directory()){
 			bool isOpen = ImGui::TreeNode(entry.path().string().c_str());
 			ImGui::SameLine(); 
-			ImGui::Button("Rename");
+			if(ImGui::Button("Rename")){
+				
+			}
 			ImGui::SameLine();
-			ImGui::Button("Delete");
+			if(ImGui::Button("Delete")){
+				std::filesystem::path deletePath = entry.path();  
+				bool result = this->fileViewModel.DeleteDirectory(deletePath); 
+			}
 			ImGui::SameLine();
-			ImGui::Button("Move");
+			if(ImGui::Button("Move")){
+
+
+			}
 			ImGui::SameLine();
-			ImGui::Button("New File");
+			if(ImGui::Button("New File")){
+
+			}
 			ImGui::SameLine();
-			ImGui::Button("New Dir");
+			if(ImGui::Button("New Dir")){
+
+			}
 			if(isOpen){
 				this->RenderFilesAndDirectories(entry,map);	
 				ImGui::TreePop(); 
@@ -70,11 +76,18 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			ImGui::Text("%s",entryPath.string().c_str());
 			ImGui::PushID(entryPath.string().c_str()); 
 			ImGui::SameLine();
-			ImGui::Button("Rename");
+			if(ImGui::Button("Rename")){
+
+			}
+			if(ImGui::Button("Delete")){
+				std::filesystem::path deletePath = entry.path();  
+				bool result = this->fileViewModel.DeleteFile(deletePath);
+			}
 			ImGui::SameLine();
-			ImGui::Button("Delete");
-			ImGui::SameLine();
-			ImGui::Button("Move");
+			if(ImGui::Button("Move")){
+
+
+			}
 			ImGui::PopID(); 
 		}
 		ImGui::PopID(); 	
@@ -94,15 +107,29 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 		if(localEntry.is_directory()){
 			bool isOpen = ImGui::TreeNode(localEntry.path().string().c_str()); 
 			ImGui::SameLine(); 
-			ImGui::Button("Rename");
+			if(ImGui::Button("Rename")){
+
+			}
 			ImGui::SameLine();
-			ImGui::Button("Delete");
+			if(ImGui::Button("Delete")){
+				// Are you sure 
+				// log it 
+				std::filesystem::path deletePath =localEntry.path();  
+				bool result = this->fileViewModel.DeleteDirectory(deletePath);
+				// Log result 	
+			}
 			ImGui::SameLine();
-			ImGui::Button("Move");
+			if(ImGui::Button("Move")){
+			
+			}
 			ImGui::SameLine();
-			ImGui::Button("New File");
+			if(ImGui::Button("New File")){
+			
+			}
 			ImGui::SameLine();
-			ImGui::Button("New Dir");
+			if(ImGui::Button("New Dir")){
+			
+			}
 			if(isOpen){
 				this->RenderFilesAndDirectories(localEntry,map);	
 				ImGui::TreePop(); 
@@ -114,11 +141,23 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			ImGui::Text("%s",localEntry.path().string().c_str());
 			ImGui::PushID(localEntry.path().string().c_str()); 
 			ImGui::SameLine();
-			ImGui::Button("Rename");
+			if(ImGui::Button("Rename")){
+
+
+			}
 			ImGui::SameLine();
-			ImGui::Button("Delete");
+			if(ImGui::Button("Delete")){
+				// Are you sure 
+				// log it 
+				std::filesystem::path deletePath =localEntry.path();  
+				bool result = this->fileViewModel.DeleteFile(deletePath);
+				// Log result 	
+			}
 			ImGui::SameLine();
-			ImGui::Button("Move");
+			if(ImGui::Button("Move")){
+
+
+			}
 			ImGui::PopID();
 		}
 		ImGui::PopID(); 
