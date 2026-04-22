@@ -79,16 +79,56 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Move")){
-
-
+				
+				
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("New File")){
+				
+				ImGui::OpenPopup("New File"); 
+			}
+			if(ImGui::BeginPopup("New File")){
 
+				ImGui::Text("New File Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+					buffer, 
+					sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered){
+					ImGui::CloseCurrentPopup();	
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("New Dir")){
-
+				ImGui::OpenPopup("New Dir"); 
+			}
+			if(ImGui::BeginPopup("New Dir")){
+				ImGui::Text("New Directory Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
+						buffer, 
+						sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered)
+				{
+					ImGui::CloseCurrentPopup();	
+					// Implement RenameDirectory
+				}
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
+				ImGui::EndPopup();
 			}
 			if(isOpen){
 				this->RenderFilesAndDirectories(entry,map);	
@@ -163,10 +203,11 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			if(ImGui::BeginPopup("Rename Directory")){
 				if(ImGui::InputText("New Name for file: ", 
 						buffer, 
-						sizeof(buffer)))
-				{
+						sizeof(buffer))){
+				
 					ImGui::CloseCurrentPopup();	
 				}
+				
 				ImGui::EndPopup();
 			}
 			ImGui::SameLine();
@@ -176,8 +217,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Move")){
-			
 			}
+			
 			ImGui::SameLine();
 			if(ImGui::Button("New File")){
 			
@@ -199,9 +240,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			ImGui::SameLine();
 			if(ImGui::Button("Rename")){
 
-				
 				ImGui::OpenPopup("Rename File");
-					
 			}
 				
 			static char buffer[256]; 
