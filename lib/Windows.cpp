@@ -88,7 +88,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 
 				ImGui::Text("New File Name: ");
 				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewName", 
+				bool textInput = ImGui::InputText("##NewFile", 
 					buffer, 
 					sizeof(buffer)); 
 				ImGui::SameLine(); 
@@ -155,7 +155,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			if(ImGui::BeginPopup("Rename File")){
 				ImGui::Text("New File Name: ");
 				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewName", 
+				bool textInput = ImGui::InputText("##NewFile", 
 					buffer, 
 					sizeof(buffer)); 
 				ImGui::SameLine(); 
@@ -235,7 +235,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 
 				ImGui::Text("New File Name: ");
 				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewName", 
+				bool textInput = ImGui::InputText("##NewFile", 
 					buffer, 
 					sizeof(buffer)); 
 				ImGui::SameLine(); 

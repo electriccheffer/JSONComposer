@@ -10,7 +10,8 @@ FileViewModel::FileViewModel(){}
 
 bool FileViewModel::NewFile(std::filesystem::path& writeLocation,std::string& objectName){
 	
-	std::ofstream file(writeLocation); 
+	std::filesystem::path newPath = writeLocation / objectName; 	
+	std::ofstream file(newPath); 
 	std::string writeData = std::string("{\"") + objectName + "\":[]}"; 
 	if(!file.is_open()){
 		return false; 	

@@ -14,17 +14,17 @@ TEST(ViewModelTrivialTest,AlwaysPasses){
 TEST(FileViewModelTest,WriteFile){
 
 	std::filesystem::path writeLocation = std::filesystem::path("test") / "testData" / 
-						"ViewModelTest" / "file.txt"; 
+						"ViewModelTest"; 
 	FileViewModel fileViewModel;
 	std::string objectName = std::string("Spells"); 
 	EXPECT_TRUE(fileViewModel.NewFile(writeLocation,objectName));
 	std::string expectedContent = std::string("{\"") + "Spells" + "\":[]}"; 
-	std::ifstream file(writeLocation);
+	std::ifstream file(writeLocation / objectName);
 	std::stringstream buffer; 
 	buffer << file.rdbuf();
 	std::string output = buffer.str();  
 	EXPECT_TRUE(std::filesystem::exists(writeLocation)); 
-	std::filesystem::remove(writeLocation);
+	std::filesystem::remove(writeLocation / objectName);
 	EXPECT_EQ(expectedContent,output);
 }
 
@@ -77,10 +77,11 @@ TEST(FileViewModelTest,BadPathError){
 TEST(FileViewModelTest,DeleteFile){
 	
 	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
-					     "deleteFileDirectory" / "deleteMe.txt"; 	
+					     "deleteFileDirectory"; 	
 	FileViewModel fileViewModel;
 	std::string objectName = "Spells";  
 	EXPECT_TRUE(fileViewModel.NewFile(deletionPath,objectName));
+	deletionPath /= objectName; 
 	EXPECT_TRUE(fileViewModel.DeleteFile(deletionPath));	
 }
 
