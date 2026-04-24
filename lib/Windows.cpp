@@ -61,7 +61,10 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				ImGui::SameLine(); 
 				bool canceled = ImGui::Button("Cancel");
 				if(textEntered){
-					
+					std::filesystem::path currentDirectory = entry.path(); 
+					std::string newDirectoryName(buffer); 
+					this->fileViewModel.RenameDirectory(currentDirectory,
+									  newDirectoryName);
 					ImGui::CloseCurrentPopup();	
 				}
 				if(canceled){
@@ -208,13 +211,26 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			}
 			static char buffer[256]; 
 			if(ImGui::BeginPopup("Rename Directory")){
-				if(ImGui::InputText("New Name for file: ", 
+			 
+				ImGui::Text("New Directory Name: ");
+				ImGui::SameLine(); 
+				bool textInput = ImGui::InputText("##NewName", 
 						buffer, 
-						sizeof(buffer))){
-				
+						sizeof(buffer)); 
+				ImGui::SameLine(); 
+				bool textEntered = ImGui::Button("Ok");
+				ImGui::SameLine(); 
+				bool canceled = ImGui::Button("Cancel");
+				if(textEntered){
+					std::string newDirectoryName(buffer); 
+					std::filesystem::path currentDirectory = entry.path(); 
+					this->fileViewModel.RenameDirectory(currentDirectory
+									,newDirectoryName);
 					ImGui::CloseCurrentPopup();	
 				}
-				
+				if(canceled){
+					ImGui::CloseCurrentPopup();	
+				}	
 				ImGui::EndPopup();
 			}
 			ImGui::SameLine();

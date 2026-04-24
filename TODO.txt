@@ -1,5 +1,4 @@
 - Directory window 
-	- Make popups locally
 	- Make popups in a method
 	- Command pattern
 	- Create buttons with activity
