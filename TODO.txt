@@ -1,5 +1,4 @@
 - Directory window 
-	- Implement RenameDirectory in fileViewModel
 	- Make popups locally
 	- Make popups in a method
 	- Command pattern
