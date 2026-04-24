@@ -21,6 +21,9 @@ class FileViewModel{
 		
 		bool DeleteDirectory(std::filesystem::path& deletionPath);
 		
+		bool RenameDirectory(std::filesystem::path& oldPathName,
+				    std::string& newDirectoryName);
+				
 		bool CreateDirectory(std::filesystem::path& creationPath,
 				     std::string& newDirectoryName); 
 	

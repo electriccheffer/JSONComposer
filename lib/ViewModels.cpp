@@ -75,6 +75,32 @@ bool FileViewModel::DeleteDirectory(std::filesystem::path& deletionPath){
 	return true; 
 }
 
+bool FileViewModel::RenameDirectory(std::filesystem::path& oldPathName,
+				    std::string& newDirectoryName){
+	
+	bool directoryExists = std::filesystem::exists(oldPathName); 
+	if(!directoryExists){
+
+		return false; 
+	}
+	try{
+		std::filesystem::path newPathName(oldPathName); 
+		newPathName.replace_filename(newDirectoryName);
+		std::filesystem::rename(oldPathName,newPathName);
+		bool success = std::filesystem::exists(newPathName);
+		if(success){
+			return true; 
+		}
+		else{
+			return false; 
+		}
+	}
+	catch(const std::filesystem::filesystem_error errorMessage){
+		throw errorMessage; 
+	}	
+	return false; 
+
+}
 
 bool FileViewModel::CreateDirectory(std::filesystem::path& creationPath,
 			            std::string& newDirectoryName){

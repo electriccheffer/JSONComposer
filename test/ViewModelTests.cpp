@@ -205,3 +205,30 @@ TEST(FileViewModelTest,CreateDirectoryNonExistance){
 	}
 	
 }
+
+TEST(FileViewModelTest,RenameDirectoryNormalCase){
+
+	
+	std::filesystem::path renamePath = std::filesystem::path("test") / "testData" 
+					   / "renameDirectory"; 
+	std::string newName = "newName"; 
+	
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.RenameDirectory(renamePath,newName);
+	EXPECT_TRUE(result);
+	
+	std::filesystem::path pathResult = std::filesystem::path("test") / "testData" 
+					   / "newName";
+	std::filesystem::directory_entry renamedTarget(pathResult);
+	bool pathExists = renamedTarget.exists(); 
+	EXPECT_TRUE(pathExists);
+	try{
+
+		std::filesystem::rename(pathResult,renamePath);
+	}
+	catch(const std::filesystem::filesystem_error& errorMessage){
+		
+		std::cout << errorMessage.what() << std::endl; 
+		EXPECT_TRUE(false);
+	}
+}
