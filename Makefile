@@ -22,8 +22,8 @@ buildFiles = $(sourceDirectory)/main.cpp \
 	     third_party/imgui/backends/imgui_impl_opengl3.cpp \
 	     $(libraryDirectory)/Windows.cpp \
 	     $(libraryDirectory)/IO.cpp \
-	     $(libraryDirectory)/ViewModels.cpp
-	     
+	     $(libraryDirectory)/ViewModels.cpp \
+	     $(libraryDirectory)/Popups.cpp 	     
 
 executable = $(buildDirectory)/main
 
@@ -40,7 +40,8 @@ testScripts = $(testDirectory)/IOTest.cpp \
 	      $(testDirectory)/ViewModelTests.cpp
 
 testObjectFiles = $(buildDirectory)/IO.o \
-		  $(buildDirectory)/ViewModels.o
+		  $(buildDirectory)/ViewModels.o \
+		  $(buildDirectory)/Popups.o
 
 testTarget = $(buildDirectory)/test_runner
 
@@ -67,6 +68,7 @@ $(testTarget):$(testObjectFiles)
 $(testObjectFiles): $(testFiles)
 	g++ $(CXXFlags) -c $(libraryDirectory)/IO.cpp -o $(buildDirectory)/IO.o
 	g++ $(CXXFlags) -c $(libraryDirectory)/ViewModels.cpp -o $(buildDirectory)/ViewModels.o
-	
+	g++ $(CXXFlags) -c $(libraryDirectory)/Popups.cpp -o $(buildDirectory)/Popups.o	
+
 $(executable): $(buildFiles)
 	g++ $(buildFiles) $(compileOptions) $(executable)

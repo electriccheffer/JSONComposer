@@ -3,6 +3,7 @@
 #include "../include/Windows.hpp"
 #include "../include/IO.hpp"
 #include "../include/ViewModels.hpp"
+#include "../include/Popups.hpp"
 #include <string> 
 
 void ObjectBrowserWindow::Render(){
@@ -44,35 +45,15 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 		if(entry.is_directory()){
 			bool isOpen = ImGui::TreeNode(entry.path().string().c_str());
 			ImGui::SameLine(); 
+			
 			if(ImGui::Button("Rename")){
-				
 				ImGui::OpenPopup("Rename Directory");
 			}
 				
-			static char buffer[256]; 
-			if(ImGui::BeginPopup("Rename Directory")){
-				ImGui::Text("New Directory Name: ");
-				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewName", 
-						buffer, 
-						sizeof(buffer)); 
-				ImGui::SameLine(); 
-				bool textEntered = ImGui::Button("Ok");
-				ImGui::SameLine(); 
-				bool canceled = ImGui::Button("Cancel");
-				if(textEntered){
-					std::filesystem::path currentDirectory = entry.path(); 
-					std::string newDirectoryName(buffer); 
-					this->fileViewModel.RenameDirectory(currentDirectory,
-									  newDirectoryName);
-					ImGui::CloseCurrentPopup();	
-				}
-				if(canceled){
-					ImGui::CloseCurrentPopup();	
-				}	
-				ImGui::EndPopup();
-			}		
+			RenameDirectoryPopup renameDirectoryPopup(entry);
+			renameDirectoryPopup.Render(); 			
 			ImGui::SameLine();
+
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath = entry.path();  
 				bool result = this->fileViewModel.DeleteDirectory(deletePath); 
@@ -91,6 +72,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 
 				ImGui::Text("New File Name: ");
 				ImGui::SameLine(); 
+				static char buffer[256]; 	
 				bool textInput = ImGui::InputText("##NewFile", 
 					buffer, 
 					sizeof(buffer)); 
@@ -118,6 +100,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			if(ImGui::BeginPopup("New Dir")){
 				ImGui::Text("New Directory Name: ");
 				ImGui::SameLine(); 
+				
+				static char buffer[256]; 	
 				bool textInput = ImGui::InputText("##NewName", 
 						buffer, 
 						sizeof(buffer)); 
@@ -209,6 +193,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 				
 				ImGui::OpenPopup("Rename Directory");
 			}
+			
+			//Check if rename is clicked
 			static char buffer[256]; 
 			if(ImGui::BeginPopup("Rename Directory")){
 			 
