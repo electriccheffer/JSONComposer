@@ -68,31 +68,9 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				
 				ImGui::OpenPopup("New File"); 
 			}
-			if(ImGui::BeginPopup("New File")){
-
-				ImGui::Text("New File Name: ");
-				ImGui::SameLine(); 
-				static char buffer[256]; 	
-				bool textInput = ImGui::InputText("##NewFile", 
-					buffer, 
-					sizeof(buffer)); 
-				ImGui::SameLine(); 
-				bool textEntered = ImGui::Button("Ok");
-				ImGui::SameLine(); 
-				bool canceled = ImGui::Button("Cancel");
-				if(textEntered){
-					
-					std::filesystem::path entryPath = entry.path(); 
-					std::string newFileName(buffer); 
-					this->fileViewModel.NewFile(entryPath,
-								    newFileName);
-					ImGui::CloseCurrentPopup();	
-				}
-				if(canceled){
-					ImGui::CloseCurrentPopup();	
-				}	
-				ImGui::EndPopup();
-			}
+			NewFilePopup newFilePopup(entry); 
+			newFilePopup.Render(); 
+				
 			ImGui::SameLine();
 			if(ImGui::Button("New Dir")){
 				ImGui::OpenPopup("New Dir"); 
@@ -118,6 +96,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			}
 			RenameFilePopup renameFilePopup(entry); 			
 			renameFilePopup.Render(); 
+
 			ImGui::SameLine(); 
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath = entry.path();  
@@ -170,33 +149,10 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 				
 				ImGui::OpenPopup("New File"); 
 			}
-			if(ImGui::BeginPopup("New File")){
-
-				ImGui::Text("New File Name: ");
-				ImGui::SameLine();
-				 
-				static char buffer[256]; 
-				bool textInput = ImGui::InputText("##NewFile", 
-					buffer, 
-					sizeof(buffer)); 
-				ImGui::SameLine(); 
-				bool textEntered = ImGui::Button("Ok");
-				ImGui::SameLine(); 
-				bool canceled = ImGui::Button("Cancel");
-				if(textEntered){
-					
-					std::filesystem::path entryPath = localEntry.path(); 
-					std::string newFileName(buffer); 
-					this->fileViewModel.NewFile(entryPath,
-								    newFileName);
-					ImGui::CloseCurrentPopup();	
-				}
-				if(canceled){
-					ImGui::CloseCurrentPopup();	
-				}	
-				ImGui::EndPopup();
-			}
+			NewFilePopup newFilePopup(localEntry); 
+			newFilePopup.Render(); 
 			ImGui::SameLine();
+			
 			if(ImGui::Button("New Dir")){
 				ImGui::OpenPopup("New Dir"); 
 			}

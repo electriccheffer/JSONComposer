@@ -32,6 +32,18 @@ class NewDirectoryPopup{
 	protected: 
 		std::filesystem::directory_entry& entry; 
 		FileViewModel fileViewModel; 
-}; 
+};
+
+
+class NewFilePopup{
+
+	public: 
+		NewFilePopup(std::filesystem::directory_entry& directoryEntry); 
+		void Render(); 
+	
+	protected: 
+		std::filesystem::directory_entry& entry; 
+		FileViewModel fileViewModel; 
+};  
  
 #endif 
