@@ -195,32 +195,12 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			}
 			
 			//Check if rename is clicked
-			static char buffer[256]; 
-			if(ImGui::BeginPopup("Rename Directory")){
-			 
-				ImGui::Text("New Directory Name: ");
-				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewName", 
-						buffer, 
-						sizeof(buffer)); 
-				ImGui::SameLine(); 
-				bool textEntered = ImGui::Button("Ok");
-				ImGui::SameLine(); 
-				bool canceled = ImGui::Button("Cancel");
-				if(textEntered){
-					std::string newDirectoryName(buffer); 
-					std::filesystem::path currentDirectory = entry.path(); 
-					this->fileViewModel.RenameDirectory(currentDirectory
-									,newDirectoryName);
-					ImGui::CloseCurrentPopup();	
-				}
-				if(canceled){
-					ImGui::CloseCurrentPopup();	
-				}	
-				ImGui::EndPopup();
-			}
+			RenameDirectoryPopup renameDirectoryPopup(localEntry);
+			renameDirectoryPopup.Render(); 			
 			ImGui::SameLine();
+			
 			if(ImGui::Button("Delete")){
+				
 				std::filesystem::path deletePath =localEntry.path();  
 				bool result = this->fileViewModel.DeleteDirectory(deletePath);
 			}
@@ -236,7 +216,9 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			if(ImGui::BeginPopup("New File")){
 
 				ImGui::Text("New File Name: ");
-				ImGui::SameLine(); 
+				ImGui::SameLine();
+				 
+				static char buffer[256]; 
 				bool textInput = ImGui::InputText("##NewFile", 
 					buffer, 
 					sizeof(buffer)); 
@@ -264,6 +246,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			if(ImGui::BeginPopup("New Dir")){
 				ImGui::Text("New Directory Name: ");
 				ImGui::SameLine(); 
+				
+				static char buffer[256]; 
 				bool textInput = ImGui::InputText("##NewName", 
 						buffer, 
 						sizeof(buffer)); 
