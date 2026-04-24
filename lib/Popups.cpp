@@ -5,8 +5,9 @@ RenameDirectoryPopup::RenameDirectoryPopup(std::filesystem::directory_entry& dir
 
 void RenameDirectoryPopup::Render(){
 	
-	static char buffer[256]; 
 	if(ImGui::BeginPopup("Rename Directory")){
+		
+		static char buffer[256]; 
 		ImGui::Text("New Directory Name: ");
 		ImGui::SameLine(); 
 		bool textInput = ImGui::InputText("##NewName", 
@@ -29,3 +30,35 @@ void RenameDirectoryPopup::Render(){
 		ImGui::EndPopup();
 	}
 }
+
+RenameFilePopup::RenameFilePopup(std::filesystem::directory_entry& directoryEntry)
+		:entry(directoryEntry){}
+
+void RenameFilePopup::Render(){
+
+	if(ImGui::BeginPopup("Rename File")){
+		
+		static char buffer[256]; 
+		ImGui::Text("New File Name: ");
+		ImGui::SameLine(); 
+		bool textInput = ImGui::InputText("##NewName", 
+			buffer, 
+			sizeof(buffer)); 
+		ImGui::SameLine(); 
+		bool textEntered = ImGui::Button("Ok");
+		ImGui::SameLine(); 
+		bool canceled = ImGui::Button("Cancel");
+		if(textEntered)
+		{	
+			std::filesystem::path currentName = this->entry.path(); 
+			std::string newFileName(buffer);
+			this->fileViewModel.RenameFile(currentName,newFileName); 
+			ImGui::CloseCurrentPopup();	
+		}
+		if(canceled){
+			ImGui::CloseCurrentPopup();	
+		}	
+		ImGui::EndPopup();
+	}
+
+} 

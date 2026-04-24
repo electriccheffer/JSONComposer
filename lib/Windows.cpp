@@ -137,29 +137,8 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 					ImGui::OpenPopup("Rename File");
 					
 			}
-				
-			static char buffer[256]; 
-			if(ImGui::BeginPopup("Rename File")){
-				ImGui::Text("New File Name: ");
-				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewFile", 
-					buffer, 
-					sizeof(buffer)); 
-				ImGui::SameLine(); 
-				bool textEntered = ImGui::Button("Ok");
-				ImGui::SameLine(); 
-				bool canceled = ImGui::Button("Cancel");
-				if(textEntered){
-					std::string bufferString(buffer);
-					this->fileViewModel.RenameFile(entryPath,
-								      bufferString);
-					ImGui::CloseCurrentPopup();	
-				}
-				if(canceled){
-					ImGui::CloseCurrentPopup();	
-				}	
-				ImGui::EndPopup();
-			}
+			RenameFilePopup renameFilePopup(entry); 			
+			renameFilePopup.Render(); 
 			ImGui::SameLine(); 
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath = entry.path();  
@@ -193,8 +172,6 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 				
 				ImGui::OpenPopup("Rename Directory");
 			}
-			
-			//Check if rename is clicked
 			RenameDirectoryPopup renameDirectoryPopup(localEntry);
 			renameDirectoryPopup.Render(); 			
 			ImGui::SameLine();
@@ -205,6 +182,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 				bool result = this->fileViewModel.DeleteDirectory(deletePath);
 			}
 			ImGui::SameLine();
+			
 			if(ImGui::Button("Move")){
 			}
 			
@@ -282,29 +260,10 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 
 				ImGui::OpenPopup("Rename File");
 			}
-				
-			static char buffer[256]; 
-			
-			if(ImGui::BeginPopup("Rename File")){
-				ImGui::Text("New File Name: ");
-				ImGui::SameLine(); 
-				bool textInput = ImGui::InputText("##NewName", 
-					buffer, 
-					sizeof(buffer)); 
-				ImGui::SameLine(); 
-				bool textEntered = ImGui::Button("Ok");
-				ImGui::SameLine(); 
-				bool canceled = ImGui::Button("Cancel");
-				if(textEntered)
-				{
-					ImGui::CloseCurrentPopup();	
-				}
-				if(canceled){
-					ImGui::CloseCurrentPopup();	
-				}	
-				ImGui::EndPopup();
-			}
+			RenameFilePopup renameFilePopup(localEntry); 
+			renameFilePopup.Render(); 
 			ImGui::SameLine();
+
 			if(ImGui::Button("Delete")){
 				std::filesystem::path deletePath =localEntry.path();  
 				bool result = this->fileViewModel.DeleteFile(deletePath);
