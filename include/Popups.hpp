@@ -22,5 +22,16 @@ class RenameFilePopup{
 	protected: 	
 		std::filesystem::directory_entry& entry; 
 		FileViewModel fileViewModel;
+};
+
+class NewDirectoryPopup{
+
+	public:
+		NewDirectoryPopup(std::filesystem::directory_entry& directoryEntry);
+		void Render(); 
+	protected: 
+		std::filesystem::directory_entry& entry; 
+		FileViewModel fileViewModel; 
 }; 
+ 
 #endif 
