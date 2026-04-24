@@ -232,3 +232,14 @@ TEST(FileViewModelTest,RenameDirectoryNormalCase){
 		EXPECT_TRUE(false);
 	}
 }
+
+TEST(FileViewModelTest,RenameDirectoryNonExist){
+	
+	std::filesystem::path nonExist("noExist");
+	FileViewModel fileViewModel; 
+	std::string newName = "IDK"; 
+	bool result = fileViewModel.RenameDirectory(nonExist,newName);
+	EXPECT_FALSE(result);
+	
+
+}
