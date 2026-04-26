@@ -164,7 +164,8 @@ void MoveDirectoryPopup::Render(){
 		if(ImGui::Button("Ok")){
 			
 			FileViewModel fileViewModel; 	
-			 	
+			std::filesystem::path destinationPath(this->destination); 
+			fileViewModel.MoveDirectory(this->sourceDirectory,destinationPath);	
 		} 
 		ImGui::SameLine(); 
 		if(ImGui::Button("Cancel")){
