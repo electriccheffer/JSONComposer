@@ -60,9 +60,13 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Move")){
-				
+					
+				ImGui::OpenPopup("Move Directory");
 				
 			}
+			std::filesystem::path sourcePath = entry.path(); 
+			MoveDirectoryPopup moveDirectory(map,projectRoot,sourcePath);	
+			moveDirectory.Render(); 
 			ImGui::SameLine();
 			if(ImGui::Button("New File")){
 				
@@ -142,7 +146,16 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			ImGui::SameLine();
 			
 			if(ImGui::Button("Move")){
+					
+				ImGui::OpenPopup("Move Directory");
+				
 			}
+			std::filesystem::path sourcePath = localEntry.path(); 
+			std::filesystem::path projectRoot = this->fileViewModel.GetProjectRoot(); 
+			MoveDirectoryPopup moveDirectory(map,projectRoot,sourcePath);	
+			moveDirectory.Render(); 
+			ImGui::SameLine();
+
 			
 			ImGui::SameLine();
 			if(ImGui::Button("New File")){

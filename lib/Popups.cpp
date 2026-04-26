@@ -127,3 +127,75 @@ void NewFilePopup::Render(){
 		ImGui::EndPopup();
 	}
 } 
+
+
+MoveDirectoryPopup::MoveDirectoryPopup(std::unordered_map
+			<std::string,std::vector<std::filesystem::directory_entry>>& directoryMap,
+			std::filesystem::path& projectRoot,
+			std::filesystem::path& sourceDirectory)
+			:directoryMap(directoryMap),projectRoot(projectRoot),
+			sourceDirectory(sourceDirectory){}
+
+void MoveDirectoryPopup::Render(){
+	
+	if(ImGui::BeginPopup("Move Directory")){
+		ImGui::Text("MOVE TO");	
+		std::string stringRootPath = this->projectRoot.string(); 
+		std::vector<std::filesystem::directory_entry> directoryContents = 
+							this->directoryMap[stringRootPath];	
+
+		for(std::filesystem::directory_entry entry : directoryContents){
+			
+			if(entry.is_directory()){
+		
+				std::filesystem::path entryPath = entry.path(); 
+				this->RenderHelper(entryPath);			
+
+			}	
+		}
+		if(destination != ""){
+			std::string moveTo("Destination: %s"); 
+			ImGui::Text(moveTo.c_str(),this->destination.c_str() );
+		}	
+		else{
+
+			ImGui::Text("Destination: "); 
+		}
+		if(ImGui::Button("Ok")){
+			
+			FileViewModel fileViewModel; 	
+			 	
+		} 
+		ImGui::SameLine(); 
+		if(ImGui::Button("Cancel")){
+			ImGui::CloseCurrentPopup(); 
+		}
+		ImGui::EndPopup(); 
+	}
+	
+}
+
+
+void MoveDirectoryPopup::RenderHelper(std::filesystem::path filePath){
+
+	std::string stringPath = filePath.string(); 	
+		
+	std::vector<std::filesystem::directory_entry> contentsList = 
+						this->directoryMap[stringPath];
+			
+	bool open = ImGui::TreeNode(stringPath.c_str()); 
+				
+	if(open){
+		this->destination = stringPath; 	
+		for(std::filesystem::directory_entry entry : contentsList){
+			if(entry.is_directory()){
+				this->RenderHelper(entry.path()); 
+			}	
+			
+		}	
+			
+		ImGui::TreePop();
+	}		
+	
+	
+} 

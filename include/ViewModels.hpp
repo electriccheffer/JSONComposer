@@ -26,7 +26,10 @@ class FileViewModel{
 				
 		bool CreateDirectory(std::filesystem::path& creationPath,
 				     std::string& newDirectoryName); 
-	
+		
+		bool MoveDirectory(std::filesystem::path& source,
+				   std::filesystem::path& destination);		
+		
 		std::filesystem::path& GetProjectRoot(); 	
 	
 		void SetProjectRoot(std::filesystem::path& newProjectRoot);

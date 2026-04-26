@@ -119,6 +119,40 @@ bool FileViewModel::CreateDirectory(std::filesystem::path& creationPath,
 	
 }
 
+bool FileViewModel::MoveDirectory(std::filesystem::path& source,
+				 std::filesystem::path& destination){
+	
+	bool sourceExists = std::filesystem::exists(source);
+	bool destinationExists = std::filesystem::exists(destination);
+	
+	if(!sourceExists){
+		return false; 
+	} 	
+	if(!destinationExists){
+	
+		return false; 
+	}
+	
+	bool isSourceDirectory = std::filesystem::is_directory(source);
+	bool isDestinationDirectory = std::filesystem::is_directory(destination); 
+	
+	if(!isSourceDirectory){
+		return false; 
+	}
+	if(!isDestinationDirectory){
+		return false; 
+	}
+	try{
+		std::filesystem::path newDestination = destination / source.filename(); 
+		std::filesystem::rename(source,newDestination);
+		return true; 
+	}
+	catch(const std::filesystem::filesystem_error fileError){
+		throw fileError; 
+	}	
+		
+}
+
 std::filesystem::path& FileViewModel::GetProjectRoot(){
 
 	return this->projectRoot; 

@@ -1,7 +1,6 @@
 - Directory window 
-	- Make popups in a method
-	- Command pattern
-	- Create buttons with activity
+	-Make Move FileViewModel function
+	-Make Move Popup
 - Object Editor
 	- Create Object for managing raw data types 
 	- Make Object Editor Window	

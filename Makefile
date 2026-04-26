@@ -11,7 +11,7 @@ CXXFlags = -std=c++17 -Iinclude
 thirdPartyDirectory = ./third_party/imgui
 
 testCompileOptions =  -I/opt/homebrew/opt/googletest/include -L/opt/homebrew/opt/googletest/lib\
-	-lgtest -lgtest_main -pthread
+	-lgtest -lgtest_main -pthread 
 
 buildFiles = $(sourceDirectory)/main.cpp \
 	     third_party/imgui/imgui.cpp \
@@ -41,7 +41,6 @@ testScripts = $(testDirectory)/IOTest.cpp \
 
 testObjectFiles = $(buildDirectory)/IO.o \
 		  $(buildDirectory)/ViewModels.o \
-		  $(buildDirectory)/Popups.o
 
 testTarget = $(buildDirectory)/test_runner
 

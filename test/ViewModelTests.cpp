@@ -243,3 +243,39 @@ TEST(FileViewModelTest,RenameDirectoryNonExist){
 	
 
 }
+
+TEST(FileViewModelTest,MoveDirectoryNormal){
+	
+	std::filesystem::path source = std::filesystem::path("test") / "testData" 
+					   / "moveDirectory" / "source";
+	
+	std::filesystem::path destination = std::filesystem::path("test") / "testData" 
+					   / "moveDirectory" / "destination"; 
+	 
+	std::filesystem::path destinationExpected = std::filesystem::path("test") / "testData"
+					  / "moveDirectory" / "destination" / "source" 
+					  / "file.txt"; 	
+	std::filesystem::path resetSource = std::filesystem::path("test") / "testData"
+					  / "moveDirectory" / "destination" / "source"; 
+	
+	std::filesystem::path resetDestination = std::filesystem::path("test") / "testData"
+						/ "moveDirectory" / "source"; 
+	FileViewModel fileViewModel; 
+	bool output = fileViewModel.MoveDirectory(source,destination); 	
+	EXPECT_TRUE(output); 
+
+	bool success = std::filesystem::exists(destinationExpected);
+	EXPECT_TRUE(success);
+	
+	std::filesystem::path resetPath = std::filesystem::path("test") / "testData" 
+					  / "moveDirectory" / "source";
+	std::filesystem::rename(resetSource,resetDestination);
+	
+	std::filesystem::path sourceResetExpected = std::filesystem::path("test") / "testData"
+						   / "moveDirectory" / "source" / "file.txt";
+	
+	bool resetSuccess = std::filesystem::exists(sourceResetExpected);
+	
+	EXPECT_TRUE(resetSuccess); 
+	
+}
