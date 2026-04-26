@@ -318,3 +318,15 @@ TEST(FileViewModelTest,MoveDirectoryFileSource){
 	EXPECT_FALSE(result); 
 		
 }
+
+TEST(FileViewModelTest,MoveDirectoryFileDestination){
+	
+	std::filesystem::path fileSource = std::filesystem::path("test") / "testData" / 
+					  "moveDirectory"/  "nonEmptyDestination" / "file.txt"; 
+	std::filesystem::path destination = std::filesystem::path("test") / "testData" / 
+						"moveDirectory" / "source"; 
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.MoveDirectory(destination,fileSource);
+	EXPECT_FALSE(result); 
+		
+}
