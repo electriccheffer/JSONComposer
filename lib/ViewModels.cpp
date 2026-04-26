@@ -5,6 +5,7 @@
 #include <string> 
 #include <vector> 
 #include <unordered_map> 
+#include <iostream> 
 
 FileViewModel::FileViewModel(){}
 
@@ -148,7 +149,12 @@ bool FileViewModel::MoveDirectory(std::filesystem::path& source,
 		return true; 
 	}
 	catch(const std::filesystem::filesystem_error fileError){
-		throw fileError; 
+		std::cout << "ERROR CAUGHT " << std::endl; 	
+		std::filesystem::path newDestination = destination / source.filename(); 
+		std::filesystem::copy(source,newDestination
+					,std::filesystem::copy_options::recursive); 
+		std::filesystem::remove_all(source);
+		return true; 
 	}	
 		
 }
