@@ -223,6 +223,7 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			moveFilePopup.Render();
 			ImGui::PopID();
 		}
+		ImGui::PopID(); 
 		 
 	}	
 	
