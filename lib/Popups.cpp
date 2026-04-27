@@ -235,8 +235,8 @@ void MoveFilePopup::Render(){
 		if(ImGui::Button("Ok")){
 			
 			FileViewModel fileViewModel;
-			//Add the operation
-
+			std::filesystem::path destinationPath(this->destination);
+			fileViewModel.MoveFile(this->sourceFile,destinationPath);		
 		}
 		ImGui::SameLine(); 
 		if(ImGui::Button("Cancel")){
