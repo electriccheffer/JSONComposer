@@ -108,16 +108,29 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 			}
 			ImGui::SameLine();
 			if(ImGui::Button("Move File")){
-				ImGui::OpenPopup("New File");
-				MoveFilePopup moveFilePopup(map,projectRoot,entryPath);
-				moveFilePopup.Render(); 
+				ImGui::OpenPopup("Move File");
 
 			}
+			MoveFilePopup moveFilePopup(map,projectRoot,entryPath);
+			moveFilePopup.Render();
 			ImGui::PopID(); 
 		}
 		ImGui::PopID(); 	
 	}
-			
+	if(ImGui::Button("Create New File")){
+	
+		ImGui::OpenPopup("New File"); 
+	}
+	std::filesystem::path atPath = this->fileViewModel.GetProjectRoot(); 
+	std::filesystem::directory_entry at(atPath);	
+	NewFilePopup newFilePopup(at); 
+	newFilePopup.Render();	
+	ImGui::SameLine(); 
+	if(ImGui::Button("Create New Directory")){
+		ImGui::OpenPopup("New Dir");
+	}
+	NewDirectoryPopup newDirectoryPopup(at); 
+	newDirectoryPopup.Render(); 		
 }
 
 
@@ -210,9 +223,9 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 			moveFilePopup.Render();
 			ImGui::PopID();
 		}
-		ImGui::PopID(); 
+		 
 	}	
-		
+	
 }
 
 void InputWindow::Render(){
