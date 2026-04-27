@@ -147,6 +147,19 @@ TEST(FileViewModelTest,MoveFileSourceNoExist){
 
 }
 
+TEST(FileViewModelTest,MoveFileDestinationNoExist){
+
+	std::filesystem::path source = std::filesystem::path("test") / "testData" / "moveFile" /
+					"File.txt"; 
+	std::filesystem::path destination = std::filesystem::path("test") / "testData" / 
+					    "moveFile" / "NoFolder";
+	
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.MoveFile(source,destination);
+	EXPECT_FALSE(result);
+
+}
+
 TEST(FileViewModelTest,DeleteDirectory){
 	
 	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
