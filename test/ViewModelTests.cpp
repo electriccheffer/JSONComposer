@@ -119,6 +119,34 @@ TEST(FileViewModelTest,MoveFileNormalCase){
 
 }
 
+TEST(FileViewModelTest,MoveFileMovingDirectory){
+
+	
+	std::filesystem::path source = std::filesystem::path("test") / "testData" / "moveFile" /
+					"file.txt"; 
+	std::filesystem::path destination = std::filesystem::path("test") / "testData" / 
+					    "moveFile" / "DestinationFolder";
+	
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.MoveFile(destination,source);
+	EXPECT_FALSE(result);	 
+		
+
+}
+
+TEST(FileViewModelTest,MoveFileSourceNoExist){
+
+	std::filesystem::path source = std::filesystem::path("test") / "testData" / "moveFile" /
+					"NoExist.txt"; 
+	std::filesystem::path destination = std::filesystem::path("test") / "testData" / 
+					    "moveFile" / "DestinationFolder";
+	
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.MoveFile(source,destination);
+	EXPECT_FALSE(result);
+
+}
+
 TEST(FileViewModelTest,DeleteDirectory){
 	
 	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /
