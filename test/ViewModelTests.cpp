@@ -92,6 +92,33 @@ TEST(FileViewModelTest,DeletePathNonExist){
 	EXPECT_FALSE(fileViewModel.DeleteFile(deletionPath));	
 }
 
+TEST(FileViewModelTest,MoveFileNormalCase){
+
+	std::filesystem::path source = std::filesystem::path("test") / "testData" / "moveFile" /
+					"file.txt"; 
+	std::filesystem::path destination = std::filesystem::path("test") / "testData" / 
+					    "moveFile" / "DestinationFolder";
+	
+	FileViewModel fileViewModel; 
+	bool result = fileViewModel.MoveFile(source,destination);
+	EXPECT_TRUE(result);	 
+		
+	std::filesystem::path expectedFileResult = std::filesystem::path(destination) / "file.txt";
+	
+	bool exists = std::filesystem::exists(expectedFileResult);
+	EXPECT_TRUE(exists);
+	
+	std::filesystem::copy(expectedFileResult,source);
+	std::filesystem::remove(expectedFileResult); 
+	bool doesNotExist = std::filesystem::exists(expectedFileResult);
+	EXPECT_FALSE(doesNotExist);
+
+	exists = std::filesystem::exists(source);
+	EXPECT_TRUE(exists); 
+ 	
+
+}
+
 TEST(FileViewModelTest,DeleteDirectory){
 	
 	std::filesystem::path deletionPath = std::filesystem::path("test") / "testData" /

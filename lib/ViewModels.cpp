@@ -67,6 +67,32 @@ bool FileViewModel::DeleteFile(std::filesystem::path& deletionPath){
 
 }
 
+bool FileViewModel::MoveFile(std::filesystem::path& source, std::filesystem::path& destination){
+	
+	if(!std::filesystem::exists(source)){
+		return false; 
+	}
+	if(!std::filesystem::exists(destination)){
+		return false; 
+	}
+	std::filesystem::directory_entry directoryEntry(destination); 
+	if(!directoryEntry.is_directory()){
+
+		return false; 
+	}
+	std::filesystem::directory_entry fileEntry(source);
+	if(!fileEntry.is_regular_file()){
+		
+		return false; 
+	}
+	std::filesystem::path fileName = source.filename(); 
+	std::filesystem::path destinationCopy(destination); 
+	destinationCopy /= fileName; 
+	std::filesystem::rename(source,destinationCopy);
+
+	return true; 
+}
+
 bool FileViewModel::DeleteDirectory(std::filesystem::path& deletionPath){
 
 	int numberRemoved =  std::filesystem::remove_all(deletionPath);
