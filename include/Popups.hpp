@@ -70,4 +70,23 @@ class MoveDirectoryPopup{
 		std::string  destination; 
 		 
 }; 						
+
+class MoveFilePopup{
+
+	public:
+		MoveFilePopup(std::unordered_map<
+			std::string,std::vector<std::filesystem::directory_entry>>& directoryMap,
+			std::filesystem::path& projectRoot, std::filesystem::path& sourceFile);	
+		void Render(); 
+		
+	protected: 
+		void RenderHelper(std::filesystem::path entry); 
+		std::unordered_map
+			<std::string,
+				std::vector<std::filesystem::directory_entry>>& map; 
+		std::filesystem::path& projectRoot; 
+		std::filesystem::path& sourceFile;
+		std::string destination = "";  
+		
+};
 #endif 

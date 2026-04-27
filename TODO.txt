@@ -1,6 +1,6 @@
 - Directory window 
-	-Make Move FileViewModel function
-	-Make Move Popup
+	- Make FileViewModel MoveFile
+	- Put Move file popup
 - Object Editor
 	- Create Object for managing raw data types 
 	- Make Object Editor Window	

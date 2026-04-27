@@ -138,6 +138,7 @@ MoveDirectoryPopup::MoveDirectoryPopup(std::unordered_map
 
 void MoveDirectoryPopup::Render(){
 	
+	ImGui::SetNextWindowSize(ImVec2(600, 500), ImGuiCond_Always);
 	if(ImGui::BeginPopup("Move Directory")){
 		ImGui::Text("MOVE TO");	
 		std::string stringRootPath = this->projectRoot.string(); 
@@ -199,4 +200,73 @@ void MoveDirectoryPopup::RenderHelper(std::filesystem::path filePath){
 	}		
 	
 	
-} 
+}
+
+MoveFilePopup::MoveFilePopup(std::unordered_map<
+			std::string,std::vector<std::filesystem::directory_entry>>& directoryMap,
+			std::filesystem::path& projectRoot, std::filesystem::path& sourceFile):
+			map(directoryMap),projectRoot(projectRoot),sourceFile(sourceFile){} 
+
+
+void MoveFilePopup::Render(){
+
+	std::vector<std::filesystem::directory_entry> topDirectoryContents = 
+							map[this->projectRoot.string()];
+	
+	if(ImGui::BeginPopup("Move File")){
+
+		for(std::filesystem::directory_entry entry : topDirectoryContents){
+			
+				if(entry.is_directory()){
+				
+					std::filesystem::path entryPath = entry.path(); 
+					this->RenderHelper(entryPath); 
+				}
+
+		}
+		if(this->destination != ""){
+			
+			ImGui::Text("Move to: %s",this->destination.c_str());
+		}
+		else{
+
+			ImGui::Text("Move to: ");
+		}
+		if(ImGui::Button("Ok")){
+			
+			FileViewModel fileViewModel;
+			//Add the operation
+
+		}
+		ImGui::SameLine(); 
+		if(ImGui::Button("Cancel")){
+			
+			ImGui::CloseCurrentPopup(); 
+		}	
+		ImGui::EndPopup(); 
+	}
+		
+	
+}
+
+void MoveFilePopup::RenderHelper(std::filesystem::path entry){
+
+	std::vector<std::filesystem::directory_entry> subDirectoryContents = 
+								this->map[entry.string()]; 
+
+			
+		bool isOpen = ImGui::TreeNode(entry.string().c_str()); 
+		if(isOpen){
+			this->destination = entry.string(); 
+			for(std::filesystem::directory_entry entry : subDirectoryContents){
+			
+				if(entry.is_directory()){
+					
+					this->RenderHelper(entry);
+				}
+		
+			}
+			ImGui::TreePop(); 
+		}
+	
+}

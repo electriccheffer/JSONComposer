@@ -107,8 +107,10 @@ void FileBrowserWindow::RenderFilesAndDirectories(){
 				bool result = this->fileViewModel.DeleteFile(deletePath);
 			}
 			ImGui::SameLine();
-			if(ImGui::Button("Move")){
-
+			if(ImGui::Button("Move File")){
+				ImGui::OpenPopup("New File");
+				MoveFilePopup moveFilePopup(map,projectRoot,entryPath);
+				moveFilePopup.Render(); 
 
 			}
 			ImGui::PopID(); 
@@ -196,10 +198,16 @@ void FileBrowserWindow::RenderFilesAndDirectories(std::filesystem::directory_ent
 				bool result = this->fileViewModel.DeleteFile(deletePath);
 			}
 			ImGui::SameLine();
-			if(ImGui::Button("Move")){
-
+			if(ImGui::Button("Move File")){
+				ImGui::OpenPopup("Move File");
+				 
 
 			}
+			std::filesystem::path projectRoot = 
+							this->fileViewModel.GetProjectRoot();
+			std::filesystem::path localEntryPath = localEntry.path();  
+			MoveFilePopup moveFilePopup(map,projectRoot,localEntryPath);
+			moveFilePopup.Render();
 			ImGui::PopID();
 		}
 		ImGui::PopID(); 
